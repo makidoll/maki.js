@@ -20,7 +20,7 @@ Finally, I recommend you use [PM2](https://www.npmjs.com/package/pm2) to start t
 ```sh
 pm2 start app.js --name "Maki.js"
 ```
-...or just it straight off of Node.js:
+...or just run it straight off of Node.js:
 ```sh
 node app.js
 ```

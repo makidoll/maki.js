@@ -1,2 +1,2 @@
 # Maki.js
-> My terrible Discord bot.
+> 🎮 My terrible Discord bot.

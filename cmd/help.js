@@ -20,6 +20,6 @@ module.exports = {
 			msg.author.send(out);
 		});
 		
-		msg.channel.send("Slide into the DM*ss*, I sent you a message!");
+		msg.channel.send("*Slide into the DMs*, I sent you a message!");
 	}
 }

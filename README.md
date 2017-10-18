@@ -1,4 +1,4 @@
-<img height="110" width="400" src="https://i.imgur.com/HcYFflq.png">
+<img height="110" width="400" src="https://i.imgur.com/hTxNhro.png">
 
 > 🎮 My terrible Discord bot.
 

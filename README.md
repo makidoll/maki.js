@@ -1,4 +1,4 @@
-<img height="110" width="400" src="https://raw.githubusercontent.com/makixx/maki.js/master/img/help.png">
+<img height="110" width="400" src="https://i.imgur.com/HcYFflq.png">
 
 > 🎮 My terrible Discord bot.
 

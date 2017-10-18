@@ -1,0 +1,16 @@
+:question: **!help:** Shows all the usable commands.
+
+:hear_no_evil: **!avatar (user/s):** Links to a user/s avatar image.
+:game_die: **!osu (username):** Get player info from an osu! profile.
+
+:loud_sound: **!play (url):** Plays a YouTube video in your channel.
+
+:no_good: **!lewd34 (tag):** Shows an image from Rule34.
+:sweat_drops: **!lewdgel (tag):** Shows an image from Gelbooru.
+:ribbon: **!lewdkona (tag):** Shows an image from Konachan.
+
+:information_desk_person: **!profile:** Shows/generates your profile.
+:two_hearts: **!waifu (user):** Be in love with someone you love!
+
+**Maki.js Leaderboard:**
+https://maki.cat/js

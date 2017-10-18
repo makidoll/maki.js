@@ -1,8 +1,8 @@
-# Maki.js
+<img height="128" src="https://raw.githubusercontent.com/makixx/maki.js/master/img/help.png">
+
 > 🎮 My terrible Discord bot.
 
-
-## Instalation
+## Installation
 
 Suspecting you're using Linux:
 ```sh
@@ -11,8 +11,10 @@ npm install
 cp settings.example.js settings.js & cp users.example.js users.js
 ```
 Edit `settings.js` and set the tokens.
-| **Discord:** | https://discordapp.com/developers/applications/me |
-| **Osu!:**    | https://osu.ppy.sh/p/api                          |
+
+>**Discord:** https://discordapp.com/developers/applications/me
+
+>**Osu!:** https://osu.ppy.sh/p/api
 
 Finally, I recommend you use [PM2](https://www.npmjs.com/package/pm2) to start the bot:
 ```sh

@@ -2,8 +2,14 @@ module.exports = {
 	prefix: "!",
 	game: "!help",
 
-	DISCORD_TOKEN: "",
-	OSU_TOKEN: "",
+	token: {
+		discord: "",
+		osu: ""
+	},
 	
-	DIRNAME: __dirname
+	backup: {
+		active: false,
+		dir: "",
+		time: [0, 0, 0]
+	}
 }

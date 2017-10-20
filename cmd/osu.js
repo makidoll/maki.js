@@ -6,7 +6,7 @@ module.exports = {
 
 		msg.channel.startTyping();
 		if (username !== undefined) {
-			request("https://osu.ppy.sh/api/get_user?k="+global.OSU_TOKEN+"&u="+username, function(err, res, body) {
+			request("https://osu.ppy.sh/api/get_user?k="+global.token.osu+"&u="+username, function(err, res, body) {
 				if (JSON.parse(body)[0].level != null) {
 					let json = JSON.parse(body)[0];
 					msg.channel.send({

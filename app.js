@@ -19,34 +19,74 @@ var moment = require("moment");
 // ---------
 
 global = require(__dirname+"/settings");
+global.DIRNAME = __dirname;
 
 var commands = {
-	"help": { msg: require(__dirname+"/cmd/help").msg },
+	"help": { msg: require(global.DIRNAME+"/cmd/help").msg },
 
-	"avatar": { msg: require(__dirname+"/cmd/avatar").msg },
-	"osu": { msg: require(__dirname+"/cmd/osu").msg },
+	"avatar": { msg: require(global.DIRNAME+"/cmd/avatar").msg },
+	"osu": { msg: require(global.DIRNAME+"/cmd/osu").msg },
 
-	"play": { msg: require(__dirname+"/cmd/play").msg },
+	"play": { msg: require(global.DIRNAME+"/cmd/play").msg },
 
-	"lewd34": { msg: require(__dirname+"/cmd/lewd34").msg },
-	"lewdgel": { msg: require(__dirname+"/cmd/lewdgel").msg },
-	"lewdkona": { msg: require(__dirname+"/cmd/lewdkona").msg },
+	"lewd34": { msg: require(global.DIRNAME+"/cmd/lewd34").msg },
+	"lewdgel": { msg: require(global.DIRNAME+"/cmd/lewdgel").msg },
+	"lewdkona": { msg: require(global.DIRNAME+"/cmd/lewdkona").msg },
 
-	"profile": { msg: require(__dirname+"/cmd/profile").msg },
-	"waifu": { msg: require(__dirname+"/cmd/waifu").msg },
+	"profile": { msg: require(global.DIRNAME+"/cmd/profile").msg },
+	"waifu": { msg: require(global.DIRNAME+"/cmd/waifu").msg },
+}
+
+// ---------
+// Variables
+// ---------
+
+function timelog(msg) { console.log("["+moment().format("HH:mm:ss, DD/MM/YY")+"] "+msg); }
+
+function pZ(str, amt) { return ("00000000"+str).slice(-amt); }
+
+// -------------
+// Backup Sysyem
+// -------------
+
+function updateBackup() {
+	let now = new Date();
+	let night = new Date(
+		now.getFullYear(), now.getMonth(), now.getDate(),
+		global.backup.time[0], global.backup.time[1], global.backup.time[2]
+	);
+	let update = night.getTime() - now.getTime(); // milliseconds
+
+	if (Math.sign(update) == -1) {
+		night = new Date(
+			now.getFullYear(), now.getMonth(), now.getDate() + 1,
+			global.backup.time[0], global.backup.time[1], global.backup.time[2]
+		); 
+		update = night.getTime() - now.getTime(); // milliseconds
+	}
+
+	timelog("Next backup shall be made at: "+
+		pZ(global.backup.time[0], 2)+":"+
+		pZ(global.backup.time[1], 2)+":"+
+		pZ(global.backup.time[2], 2)+" ("+global.backup.dir+")"
+	);
+
+	setTimeout(function() {
+		//fs.writeFileSync(global.backup.dir+"/users_"+moment().format("DD-MM-YY")+".json", fs.readFileSync(global.DIRNAME+"/users.json"));
+		timelog("Backup successfully made in: "+global.backup.dir+"/users_"+moment().format("DD-MM-YY")+".json");
+		updateBackup();
+	}, update);
 }
 
 // ----------
 // Discord.js
 // ----------
 
-function timelog(msg) { console.log("["+moment().format("HH:mm:ss, DD/MM/YY")+"] "+msg); }
-
 bot.on("message", function(msg) {
 	if (msg.author.bot) return;  
 	
 	// Profile
-	let users = JSON.parse(fs.readFileSync(__dirname+"/users.json"));
+	let users = JSON.parse(fs.readFileSync(global.DIRNAME+"/users.json"));
 	if (users[msg.author.id] !== undefined) {
 		if (users[msg.author.id].xp < 1000) {
 			users[msg.author.id].xp += 1;
@@ -64,7 +104,7 @@ bot.on("message", function(msg) {
 		// 	users[msg.author.id].waifu.username = msg.mentions.users.array()[0].username+" 💕";
 		// }
 
-		fs.writeFileSync(__dirname+"/users.json", JSON.stringify(users, null, ""));
+		fs.writeFileSync(global.DIRNAME+"/users.json", JSON.stringify(users, null, ""));
 	}
 	
 	// Commands
@@ -82,18 +122,20 @@ bot.on("message", function(msg) {
 
 bot.on("ready", function() {
 	bot.user.setPresence({ game: { name: global.game, type: 0 } });
-	timelog("Bot is up!");
-	console.log("https://discordapp.com/oauth2/authorize?client_id=" + bot.user.id + "&scope=bot\n");
+	timelog("Bot is online!");
+	if (global.backup.active) updateBackup();
+
+	console.log("\nhttps://discordapp.com/oauth2/authorize?client_id=" + bot.user.id + "&scope=bot\n");
 	console.log("Currently connected: ");
 	for (var i = 0; i < Object.keys(bot.guilds.array()).length; i++) {
 		console.log("  " + bot.guilds.array()[i]["name"]);
 	} console.log("");
-	
+
 	// Leaving a server
 	// bot.guilds.array()[].leave().then(g => console.log("Left the guild ${g}")).catch(console.error); 	
 
 	// Setting avatar
-	// bot.user.setAvatar(__dirname+"/img/avatar.png")
+	// bot.user.setAvatar(global.DIRNAME+"/img/avatar.png")
 });
 
-bot.login(global.DISCORD_TOKEN);
+bot.login(global.token.discord);

@@ -1,10 +1,11 @@
-<img height="128" src="https://raw.githubusercontent.com/makixx/maki.js/master/img/help.png">
+<img height="110" width="400" src="https://i.imgur.com/HcYFflq.png">
 
 > 🎮 My terrible Discord bot.
 
 ## Installation
 
 Suspecting you're using Linux:
+
 ```sh
 git clone https://github.com/makixx/maki.js & cd maki.js
 npm install
@@ -17,10 +18,15 @@ Edit `settings.js` and set the tokens.
 >**Osu!:** https://osu.ppy.sh/p/api
 
 Finally, I recommend you use [PM2](https://www.npmjs.com/package/pm2) to start the bot:
+
 ```sh
 pm2 start app.js --name "Maki.js"
 ```
 ...or just run it straight off of Node.js:
+
 ```sh
 node app.js
 ```
+## Contribute
+
+Feel free to fork or send pull requests! I originally didn't want to upload this to Github but *mommy told me to...*

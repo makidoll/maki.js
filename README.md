@@ -4,6 +4,8 @@
 
 ## Installation
 
+Firstly, install the dependencies for https://github.com/Automattic/node-canvas
+
 Suspecting you're using Linux:
 
 ```sh

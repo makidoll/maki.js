@@ -72,7 +72,7 @@ function updateBackup() {
 	);
 
 	setTimeout(function() {
-		//fs.writeFileSync(global.backup.dir+"/users_"+moment().format("DD-MM-YY")+".json", fs.readFileSync(global.DIRNAME+"/users.json"));
+		fs.writeFileSync(global.backup.dir+"/users_"+moment().format("DD-MM-YY")+".json", fs.readFileSync(global.DIRNAME+"/users.json"));
 		timelog("Backup successfully made in: "+global.backup.dir+"/users_"+moment().format("DD-MM-YY")+".json");
 		updateBackup();
 	}, update);

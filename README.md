@@ -9,9 +9,11 @@ Firstly, install the dependencies for https://github.com/Automattic/node-canvas
 Suspecting you're using Linux:
 
 ```sh
-git clone https://github.com/makixx/maki.js & cd maki.js
+git clone https://github.com/makixx/maki.js
+cd maki.js
 npm install
-cp settings.example.js settings.js & cp users.example.js users.js
+cp settings.example.js settings.js
+cp users.example.js users.js
 ```
 Edit `settings.js` and set the tokens.
 

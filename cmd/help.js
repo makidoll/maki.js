@@ -12,8 +12,7 @@ module.exports = {
 		//}
 		//out += "\n";
 	
-		out += fs.readFileSync(global.DIRNAME+"/help.txt")
-			.replace(/\[prefix\]/g, global.prefix);
+		out += fs.readFileSync(global.DIRNAME+"/help.txt", "utf8").replace(/\[prefix\]/g, global.prefix);
 
 		msg.author.send("", { 
 			files: [{ attachment: fs.readFileSync(global.DIRNAME+"/img/help.png") }]

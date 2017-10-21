@@ -4,7 +4,10 @@
 
 ## Installation
 
-Firstly, install the dependencies for https://github.com/Automattic/node-canvas
+**Dependencies:**
+
+- https://github.com/Automattic/node-canvas
+- Google Font: Roboto `pacman -Sy ttf-roboto`
 
 Suspecting you're using Linux:
 
@@ -17,9 +20,8 @@ cp users.example.js users.js
 ```
 Edit `settings.js` and set the tokens.
 
->**Discord:** https://discordapp.com/developers/applications/me
-
->**Osu!:** https://osu.ppy.sh/p/api
+- **Discord:** https://discordapp.com/developers/applications/me
+- **Osu!:** https://osu.ppy.sh/p/api
 
 Finally, I recommend you use [PM2](https://www.npmjs.com/package/pm2) to start the bot:
 

@@ -35,6 +35,8 @@ var commands = {
 
 	"profile": { msg: require(global.DIRNAME+"/cmd/profile").msg },
 	"waifu": { msg: require(global.DIRNAME+"/cmd/waifu").msg },
+
+	"coinflip": { msg: require(global.DIRNAME+"/cmd/coinflip").msg },
 }
 
 // ---------

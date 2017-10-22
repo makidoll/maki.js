@@ -99,6 +99,8 @@ bot.on("message", function(msg) {
 		users[msg.author.id].username = msg.author.username;
 		users[msg.author.id].avatarURL = msg.author.avatarURL;
 
+		if (msg.content.match(/oh my/gi)) users[msg.author.id].oh_my += 1;
+
 		// if (users[msg.author.id].waifu.id != "") {
 		// 	users[msg.author.id].waifu.id = msg.mentions.users.array()[0].id;
 		// 	users[msg.author.id].waifu.username = msg.mentions.users.array()[0].username+" 💕";

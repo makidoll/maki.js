@@ -17,6 +17,7 @@ module.exports = {
 				"level": 1,
 				"xp": 0,
 				"coins": 0,
+				"oh_my": 0,
 				"waifu": {
 					"id": "",
 					"username": ""
@@ -38,7 +39,8 @@ module.exports = {
 			.replace(/\[level\]/g, "Level "+users[msg.author.id].level+" ("+users[msg.author.id].xp+"/1000)")
 			.replace(/\[waifu\]/g, users[msg.author.id].waifu.username)
 			.replace(/\[coins\]/g, users[msg.author.id].coins)
-			.replace(/\[username\]/g, msg.author.username),
+			.replace(/\[username\]/g, msg.author.username)
+			.replace(/\[oh_my\]/g, users[msg.author.id].oh_my + " times"),
 		function(err, buffer) {
 			msg.channel.send("", {
 				files: [{ attachment: new Buffer(buffer) }]

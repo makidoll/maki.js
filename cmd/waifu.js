@@ -8,7 +8,7 @@ module.exports = {
 	msg: function(msg) {
 		let users = JSON.parse(fs.readFileSync(global.DIRNAME+"/users.json"));
 		if (users[msg.author.id] === undefined) {
-			msg.channel.send("You need to generate a profile first. Try **!profile**");
+			msg.channel.send("You need to generate a profile first. Try **"+global.prefix+"profile**");
 			return;
 		}
 	

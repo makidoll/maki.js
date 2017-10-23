@@ -8,6 +8,16 @@ module.exports = {
 	msg: function(msg) {
 
 		let users = JSON.parse(fs.readFileSync(global.DIRNAME+"/users.json"));
+		if (users[msg.author.id] === undefined) {
+			msg.channel.send("You need to generate a profile first. Try **"+global.prefix+"profile**");
+			return;
+		}
+
+		let amt = parseInt(msg.content.split(" ")[1]);
+		if (amt == undefined) {
+			msg.channel.send("You need to specify an amount. Try **"+global.prefix+"coinflip (amount)**");
+			return;
+		}
 
 		msg.channel.startTyping();
 		if (Math.random() < 0.5) {
@@ -17,19 +27,19 @@ module.exports = {
 				.replace(/\[avatar\]/g, datauri.format(".png", requests("GET", msg.author.avatarURL).getBody()).content)
 				.replace(/\[coin\]/g, datauri.format(".png", fs.readFileSync(global.DIRNAME+"/img/coin-win.png")).content),
 			function(err, buffer) {
-				msg.channel.send("**You win!** (+10 coins)", {
+				msg.channel.send("**You win!** (+"+amt+" coins)", {
 					files: [{ attachment: new Buffer(buffer) }]
 				});
-				users[msg.author.id].coins += 10;
+				users[msg.author.id].coins += amt;
 				fs.writeFileSync(global.DIRNAME+"/users.json", JSON.stringify(users, null, ""));
 				msg.channel.stopTyping();
 			});
 
 		} else {
-			msg.channel.send("**You lose!** (-10 coins)", {
+			msg.channel.send("**You lose!** (-"+amt+" coins)", {
 				files: [{ attachment: new Buffer(fs.readFileSync(global.DIRNAME+"/img/coin-lose.png")) }]
 			});
-			users[msg.author.id].coins -= 10;
+			users[msg.author.id].coins -= amt;
 			fs.writeFileSync(global.DIRNAME+"/users.json", JSON.stringify(users, null, ""));
 			msg.channel.stopTyping();
 		}

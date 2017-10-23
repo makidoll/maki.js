@@ -12,7 +12,7 @@
 :information_desk_person: **[prefix]profile:** Shows/generates your profile.
 :two_hearts: **[prefix]waifu (user):** Be in love with someone you love!
 
-:money_with_wings: **[prefix]coinflip:** Flip a coin and win/lose for 10 coins!
+:money_with_wings: **[prefix]coinflip (amount):** Flip a coin and win/lose!
 
 **Maki.js Leaderboard:**
 https://maki.cat/js

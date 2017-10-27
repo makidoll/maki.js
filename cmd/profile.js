@@ -24,6 +24,7 @@ module.exports = {
 					"username": ""
 				},
 				"oh_my": 0,
+				"waaaa": 0,
 				"desc": "Setup a description:              "+global.prefix+"desc (text)",
 				"avatarURL": msg.author.avatarURL,
 				"created": moment().unix()
@@ -49,6 +50,7 @@ module.exports = {
 			.replace(/\[coins\]/g, users[user.id].coins)
 			.replace(/\[username\]/g, user.username)
 			.replace(/\[oh_my\]/g, users[user.id].oh_my + " times")
+			.replace(/\[waaaa\]/g, "(im bad at regEX SORRYYYYY)")
 			.replace(/\[desc\]/g, desc),
 		function(err, buffer) {
 			msg.channel.stopTyping();

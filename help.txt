@@ -9,8 +9,9 @@
 :sweat_drops: **[prefix]lewdgel (tag):** Shows an image from Gelbooru.
 :ribbon: **[prefix]lewdkona (tag):** Shows an image from Konachan.
 
-:information_desk_person: **[prefix]profile:** Shows/generates your profile.
+:information_desk_person: **[prefix]profile (none/user):** Shows yours or someone else's profile.
 :two_hearts: **[prefix]waifu (user):** Be in love with someone you love!
+:book: **[prefix]desc (text):** Set your description for your profile.
 
 :money_with_wings: **[prefix]coinflip (amount):** Flip a coin and win/lose!
 

@@ -6,7 +6,7 @@
 
 **Dependencies:**
 
-- https://github.com/Automattic/node-canvas
+- https://github.com/Automattic/node-canvas#installation
 - Google Font: Roboto `pacman -Sy ttf-roboto`
 
 Suspecting you're using Linux:

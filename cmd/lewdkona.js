@@ -17,7 +17,7 @@ module.exports = {
 				var post_length = json.length;
 				var post_num = Math.floor(Math.random()*post_length);
 				//msg.channel.send("**This was rated with " + json["posts"]["post"][post_num]["score"] + " points and the tags are:**\n`" + json["posts"]["post"][post_num]["tags"] + "`\nhttp:" + json["posts"]["post"][post_num]["file_url"]);
-				msg.channel.send("This post by **"+json[post_num]["author"]+"** was rated with **" + json[post_num]["score"] + " points**:\nhttps:" + json[post_num]["file_url"]);
+				msg.channel.send("This post by **"+json[post_num]["author"]+"** was rated with **" + json[post_num]["score"] + " points**:\n" + json[post_num]["file_url"]);
 			} catch(err) {
 				msg.channel.send("Nothing exists with **" + tag + "**!");
 			}  	

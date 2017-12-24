@@ -6,7 +6,7 @@
 
 **Dependencies:**
 
-- https://github.com/Automattic/node-canvas
+- https://github.com/Automattic/node-canvas#installation
 - Google Font: Roboto `pacman -Sy ttf-roboto`
 
 Suspecting you're using Linux:
@@ -16,14 +16,14 @@ git clone https://github.com/makixx/maki.js
 cd maki.js
 npm install
 cp settings.example.js settings.js
-cp users.example.js users.js
+cp users.example.json users.json
 ```
 Edit `settings.js` and set the tokens.
 
 - **Discord:** https://discordapp.com/developers/applications/me
 - **Osu!:** https://osu.ppy.sh/p/api
 
-Finally, I recommend you use [PM2](https://www.npmjs.com/package/pm2) to start the bot:
+Finally, I recommend you use [PM2](https://www.npmjs.com/package/pm2) to start the bot indefinitely:
 
 ```sh
 pm2 start app.js --name "Maki.js"

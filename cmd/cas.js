@@ -28,7 +28,7 @@ module.exports = {
 		}
 
 		request(file_url, function(err, res, body) {
-			let file_dir = global.__dirname+"/tmp/"+filename;
+			let file_dir = global.DIRNAME+"/tmp/"+filename;
 			fs.writeFile(file_dir, body, function(err) {
 				if (err) {
 					msg.channel.send("Error whilst retrieving image!");

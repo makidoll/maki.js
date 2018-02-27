@@ -63,8 +63,8 @@ module.exports = {
 				let cas_file_dir = file_dir+"_cas."+filetype;
 				setTimeout(function() {
 					im.convert([file_dir, 
-						"-liquid-rescale", (1/3*100)+"%",
-						"-scale", (3/1*100)+"400%",
+						"-liquid-rescale", (1/4*100)+"%",
+						"-scale", (4/1*100)+"%",
 					cas_file_dir], function(err, stdout) {
 						if (err) {
 							msg.channel.send("Error whilst converting image!");

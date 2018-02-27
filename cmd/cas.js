@@ -18,6 +18,8 @@ module.exports = {
 		let filename;
 		let filetype;
 		let file_url;
+
+		console.log(msg.content)
 		let is_url = (msg.content.toLowerCase().split(" ")[1]); 
 
 		if (is_url) {

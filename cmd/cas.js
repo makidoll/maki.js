@@ -1,10 +1,34 @@
 var im = require("imagemagick");
+var request = require("request");
+
+function getFiletype(filename) {
+	let arr = filename.split(".");
+	return arr[arr.length-1].toLowerCase();
+}
 
 module.exports = {
 	msg: function(msg) {
-		let image_filename = msg.attachments.array()[0].filename;
-		let image_url = msg.attachments.array()[0].url;
+		if (!msg.attachments.array()[0]) {
+			msg.channel.send("You need to attach an image. **"+global.prefix+"cas (image attachment)**");
+			break;
+		}
 
-		console.log(image_filename, image_url);
+		let filename = msg.attachments.array()[0].filename;
+		let filetype = getFiletype(image_filename); 
+		let file_url = msg.attachments.array()[0].url;
+
+		console.log(filetype);
+
+		if (
+			filetype != "png" ||
+			filetype != "jpg" ||
+			filetype != "jpeg" ||
+		) {
+			msg.channel.send("**PNG, JPG** only!");
+		}
+
+		// request(image_url, function(err, res, body) {
+
+		// });
 	}
 }

@@ -41,7 +41,7 @@ module.exports = {
 
 				let cas_file_dir = file_dir+"_cas."+filetype;
 				setTimeout(function() {
-					im.convert([file_dir, "-scale", "10%", cas_file_dir], function(err, stdout) {
+					im.convert([file_dir, "-scale", "10%", cas_file_dir], (function(err, stdout){
 						if (err) {
 							msg.channel.send("Error whilst converting image!");
 							msg.channel.stopTyping();
@@ -51,7 +51,7 @@ module.exports = {
 
 						console.log(stdout);
 						msg.channel.send(new Buffer(fs.readFileSync(cas_file_dir)));
-					}).bind(cas_file_dir);
+					}).bind(cas_file_dir));
 				}, 200);
 			});
 		});

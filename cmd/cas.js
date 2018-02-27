@@ -31,7 +31,7 @@ module.exports = {
 		request(file_url, function(err, res, body) {
 			console.log("Downloading... "+file_url);
 			let file_dir = global.DIRNAME+"/tmp/"+filename;
-			fs.writeFile(file_dir, body, function(err) {
+			fs.writeFile(file_dir, body, "binary", function(err) {
 				if (err) {
 					msg.channel.send("Error whilst retrieving image!");
 					msg.channel.stopTyping();

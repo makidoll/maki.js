@@ -3,6 +3,11 @@ var im = require("imagemagick");
 var request = require("request");
 var Discord = require("discord.js")
 
+function getFilename(filename) {
+	let arr = filename.split(".");
+	return arr[arr.length-2].toLowerCase();
+}
+
 function getFiletype(filename) {
 	let arr = filename.split(".");
 	return arr[arr.length-1].toLowerCase();
@@ -10,24 +15,33 @@ function getFiletype(filename) {
 
 module.exports = {
 	msg: function(msg) {
+		let filename;
+		let filetype;
+		let file_url;
 		let is_url = (msg.content.toLowerCase().split(" ")[1] == "url"); 
 
 		if (!msg.attachments.array()[0] && !is_url) {
 			msg.channel.send("You need to attach an image. **"+global.prefix+"cas (image attachment)**");
 			return;
+		} else {
+			filename = msg.attachments.array()[0].filename;
+			filetype = getFiletype(filename); 
+			file_url = msg.attachments.array()[0].url;
+
+			if (
+				filetype != "png" &&
+				filetype != "jpg" &&
+				filetype != "jpeg"
+			) {
+				msg.channel.send("**PNG, JPG** only!");
+				return;
+			}	
 		}
 
-		let filename = msg.attachments.array()[0].filename;
-		let filetype = getFiletype(filename); 
-		let file_url = msg.attachments.array()[0].url;
-
-		if (
-			filetype != "png" &&
-			filetype != "jpg" &&
-			filetype != "jpeg"
-		) {
-			msg.channel.send("**PNG, JPG** only!");
-			return;
+		if (is_url) {
+			file_url = msg.content.split(" ")[2];
+			filename = getFilename(file_url);
+			filetype = getFilename(filename);
 		}
 
 		msg.channel.startTyping();

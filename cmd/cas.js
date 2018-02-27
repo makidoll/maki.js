@@ -27,21 +27,31 @@ module.exports = {
 			return;
 		}
 
+		msg.channel.startTyping();
 		request(file_url, function(err, res, body) {
 			let file_dir = global.DIRNAME+"/tmp/"+filename;
 			fs.writeFile(file_dir, body, function(err) {
 				if (err) {
 					msg.channel.send("Error whilst retrieving image!");
+					msg.channel.stopTyping();
 					console.log(err);
-					return
+					return;
 				}
 
 				let cas_file_dir = file_dir+"_cas."+filetype;
-				im.convert([file_dir, "-scale 10%", cas_file_dir], function(err, stdout) {
-					console.log(stdout);
-					msg.channel.send(fs.readFileSync(cas_file_dir));
-
-				});
+				setTimeout(function() {
+					im.convert([file_dir, "-scale 10%", cas_file_dir], function(err, stdout) {
+						if (err) {
+							msg.channel.send("Error whilst converting image!");
+							msg.channel.stopTyping();
+							console.log(err);
+							return;
+						}
+						
+						console.log(stdout);
+						msg.channel.send(fs.readFileSync(cas_file_dir));
+					});
+				}, 200);
 			});
 		});
 	}

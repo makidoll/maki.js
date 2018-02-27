@@ -50,7 +50,7 @@ module.exports = {
 						}
 
 						console.log(stdout);
-						msg.channel.send(fs.readFileSync(cas_file_dir));
+						msg.channel.send(new Discord.Attachment(fs.readFileSync(cas_file_dir)));
 					});
 				}, 200);
 			});

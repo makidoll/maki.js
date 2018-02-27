@@ -5,7 +5,6 @@ var Discord = require("discord.js")
 
 function getFilenameFromUrl(url) {
 	let arr = url.split("/");
-	console.log(arr);
 	return arr[arr.length-1].toLowerCase();
 }
 
@@ -23,6 +22,7 @@ module.exports = {
 
 		if (is_url) {
 			file_url = msg.content.split(" ")[2];
+			console.log(file_url);
 			filename = getFilenameFromUrl(file_url);
 			filetype = getFiletype(filename);
 		}

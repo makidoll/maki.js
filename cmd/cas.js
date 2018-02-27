@@ -25,14 +25,16 @@ module.exports = {
 			console.log(file_url)
 			filename = getFilenameFromUrl(file_url);
 			console.log(filename)
-			filetype = getFiletype(filename);
+			filetype = "";
 			console.log(filetype)
 		}
 
-		if (!msg.attachments.array()[0] && !is_url) {
+		if (!msg.attachments.array()[0]) {
 			msg.channel.send("You need to attach an image. **"+global.prefix+"cas (url or image)**");
 			return;
-		} else {
+		} 
+
+		if (!is_url) {
 			filename = msg.attachments.array()[0].filename;
 			filetype = getFiletype(filename); 
 			file_url = msg.attachments.array()[0].url;

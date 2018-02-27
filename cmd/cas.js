@@ -32,6 +32,7 @@ module.exports = {
 			fs.writeFile(file_dir, body, function(err) {
 				if (err) {
 					msg.channel.send("Error whilst retrieving image!");
+					console.log(err);
 					return
 				}
 

@@ -1,6 +1,7 @@
 var fs = require("fs");
 var im = require("imagemagick");
 var request = require("request");
+var Discord = require("discord.js")
 
 function getFiletype(filename) {
 	let arr = filename.split(".");
@@ -50,8 +51,7 @@ module.exports = {
 						}
 
 						console.log(stdout);
-						console.log(cas_file_dir);
-						msg.channel.send(fs.readFileSync(cas_file_dir));
+						msg.channel.send(new Discord.Attachment(cas_file_dir));
 					});
 				}, 200);
 			});

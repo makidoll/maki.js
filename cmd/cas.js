@@ -10,7 +10,7 @@ module.exports = {
 	msg: function(msg) {
 		if (!msg.attachments.array()[0]) {
 			msg.channel.send("You need to attach an image. **"+global.prefix+"cas (image attachment)**");
-			break;
+			return;
 		}
 
 		let filename = msg.attachments.array()[0].filename;
@@ -25,6 +25,7 @@ module.exports = {
 			filetype != "jpeg" ||
 		) {
 			msg.channel.send("**PNG, JPG** only!");
+			return;
 		}
 
 		// request(image_url, function(err, res, body) {

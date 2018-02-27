@@ -21,8 +21,7 @@ module.exports = {
 		let is_url = (msg.content.toLowerCase().split(" ")[1]);
 
 		if (is_url) {
-			file_url = msg.content.split(" ")[2];
-			console.log(file_url);
+			file_url = msg.content.toLowerCase().split(" ")[1];
 			filename = getFilenameFromUrl(file_url);
 			filetype = getFiletype(filename);
 		}

@@ -22,7 +22,7 @@ module.exports = {
 		if (
 			filetype != "png" ||
 			filetype != "jpg" ||
-			filetype != "jpeg" ||
+			filetype != "jpeg"
 		) {
 			msg.channel.send("**PNG, JPG** only!");
 			return;

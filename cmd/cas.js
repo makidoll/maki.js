@@ -29,7 +29,7 @@ module.exports = {
 
 		msg.channel.startTyping();
 		request({url: file_url, encoding: "binary"}, function(err, res, body) {
-			console.log("Downloading... "+file_url);
+			//console.log("Downloading... "+file_url);
 			let file_dir = global.DIRNAME+"/tmp/"+filename;
 			fs.writeFile(file_dir, body, "binary", function(err) {
 				if (err) {
@@ -51,7 +51,7 @@ module.exports = {
 
 						console.log(stdout);
 						msg.channel.send(new Buffer(fs.readFileSync(cas_file_dir)));
-					});
+					}).bind(cas_file_dir);
 				}, 200);
 			});
 		});

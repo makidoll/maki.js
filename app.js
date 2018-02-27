@@ -120,7 +120,7 @@ bot.on("message", function(msg) {
 			commands[cmd].msg(msg);
 			timelog(msg.author.username+" ran "+msg.content);
 		} catch(err) {
-			//console.log(err);
+			console.log(err);
 			msg.channel.send("Command not found or an error occurred. Try **"+global.prefix+"help**");
 		}
 	}

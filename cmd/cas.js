@@ -19,12 +19,8 @@ module.exports = {
 		let filetype;
 		let file_url;
 
-		console.log(msg.content);
-		console.log(msg.content);
-		console.log(msg.content);
-		console.log(msg.content);
-		console.log(msg.content);
-		let is_url = (msg.content.toLowerCase().split(" ")[1]); 
+		console.log(msg.content.toLowerCase().split(" "));
+		let is_url = (msg.content.toLowerCase().split(" ")[1])? true: false; 
 
 		if (is_url) {
 			file_url = msg.content.split(" ")[2];
@@ -70,8 +66,8 @@ module.exports = {
 				let cas_file_dir = file_dir+"_cas."+filetype;
 				setTimeout(function() {
 					im.convert([file_dir, 
-						"-liquid-rescale", "50%",
-						"-scale", "200%",
+						"-liquid-rescale", "25%",
+						"-scale", "400%",
 					cas_file_dir], function(err, stdout) {
 						if (err) {
 							msg.channel.send("Error whilst converting image!");

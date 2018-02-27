@@ -21,7 +21,7 @@ module.exports = {
 		let is_url = (msg.content.toLowerCase().split(" ")[1] == "url"); 
 
 		if (!msg.attachments.array()[0] && !is_url) {
-			msg.channel.send("You need to attach an image. **"+global.prefix+"cas (image attachment)**");
+			msg.channel.send("You need to attach an image. **"+global.prefix+"cas 'url (url)' or '(image)'**");
 			return;
 		} else {
 			filename = msg.attachments.array()[0].filename;

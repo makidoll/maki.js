@@ -20,6 +20,12 @@ module.exports = {
 		let file_url;
 		let is_url = (msg.content.toLowerCase().split(" ")[1]); 
 
+		if (is_url) {
+			file_url = msg.content.split(" ")[2];
+			filename = getFilename(file_url);
+			filetype = getFilename(filename);
+		}
+
 		if (!msg.attachments.array()[0] && !is_url) {
 			msg.channel.send("You need to attach an image. **"+global.prefix+"cas (url or image)**");
 			return;
@@ -36,12 +42,6 @@ module.exports = {
 				msg.channel.send("**PNG, JPG** only!");
 				return;
 			}	
-		}
-
-		if (is_url) {
-			file_url = msg.content.split(" ")[2];
-			filename = getFilename(file_url);
-			filetype = getFilename(filename);
 		}
 
 		msg.channel.startTyping();

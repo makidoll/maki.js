@@ -18,9 +18,7 @@ module.exports = {
 		let filename;
 		let filetype;
 		let file_url;
-
-		console.log(msg.content.toLowerCase().split(" ")[1]);
-		let is_url = (msg.content.toLowerCase().split(" ")[1])? true: false; 
+		let is_url = (msg.content.toLowerCase().split(" ")[1]);
 
 		if (is_url) {
 			file_url = msg.content.split(" ")[2];
@@ -51,7 +49,6 @@ module.exports = {
 			if (err) {
 				msg.channel.send("Error whilst downloading image!");
 				msg.channel.stopTyping();
-				console.log(err);
 				return;
 			}
 

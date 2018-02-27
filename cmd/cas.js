@@ -14,7 +14,7 @@ module.exports = {
 		}
 
 		let filename = msg.attachments.array()[0].filename;
-		let filetype = getFiletype(image_filename); 
+		let filetype = getFiletype(filename); 
 		let file_url = msg.attachments.array()[0].url;
 
 		console.log(filetype);

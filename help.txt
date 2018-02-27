@@ -2,6 +2,7 @@
 
 :hear_no_evil: **[prefix]avatar (user/s):** Links to a user/s avatar image.
 :game_die: **[prefix]osu (username):** Get player info from an osu! user.
+:scales: **[prefix]cas (url or image):** Content-aware scale an image.
 
 :loud_sound: **[prefix]play (url):** Plays a YouTube video in your channel.
 

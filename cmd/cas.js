@@ -3,9 +3,9 @@ var im = require("imagemagick");
 var request = require("request");
 var Discord = require("discord.js")
 
-function getFilename(filename) {
-	let arr = filename.split(".");
-	return arr[arr.length-2].toLowerCase();
+function getFilenameFromUrl(filename) {
+	let arr = filename.split("/");
+	return arr[arr.length-1].toLowerCase();
 }
 
 function getFiletype(filename) {
@@ -24,8 +24,8 @@ module.exports = {
 
 		if (is_url) {
 			file_url = msg.content.split(" ")[2];
-			filename = getFilename(file_url);
-			filetype = getFilename(filename);
+			filename = getFilenameFromUrl(file_url);
+			filetype = getFiletype(filename);
 		}
 
 		if (!msg.attachments.array()[0] && !is_url) {

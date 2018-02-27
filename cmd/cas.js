@@ -10,7 +10,9 @@ function getFiletype(filename) {
 
 module.exports = {
 	msg: function(msg) {
-		if (!msg.attachments.array()[0]) {
+		let is_url = (msg.content.toLowerCase().split(" ")[1] == "url"); 
+
+		if (!msg.attachments.array()[0] && !is_url) {
 			msg.channel.send("You need to attach an image. **"+global.prefix+"cas (image attachment)**");
 			return;
 		}
@@ -30,14 +32,19 @@ module.exports = {
 
 		msg.channel.startTyping();
 		request({url: file_url, encoding: "binary"}, function(err, res, body) {
-			//console.log("Downloading... "+file_url);
+			if (err) {
+				msg.channel.send("Error whilst downloading image!");
+				msg.channel.stopTyping();
+				console.log(err);
+				return;
+			}
+
 			let file_dir = global.DIRNAME+"/tmp/"+filename;
 			fs.writeFile(file_dir, body, "binary", function(err) {
 				if (err) {
 					msg.channel.send("Error whilst retrieving image!");
 					msg.channel.stopTyping();
 					console.log(err);
-					return;
 				}
 
 				let cas_file_dir = file_dir+"_cas."+filetype;
@@ -56,6 +63,7 @@ module.exports = {
 
 						console.log(stdout);
 						msg.channel.send(new Discord.Attachment(cas_file_dir));
+						msg.channel.stopTyping();
 					});
 				}, 200);
 			});

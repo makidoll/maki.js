@@ -22,8 +22,11 @@ module.exports = {
 
 		if (is_url) {
 			file_url = msg.content.toLowerCase().split(" ")[1];
+			console.log(file_url)
 			filename = getFilenameFromUrl(file_url);
+			console.log(filename)
 			filetype = getFiletype(filename);
+			console.log(filetype)
 		}
 
 		if (!msg.attachments.array()[0] && !is_url) {

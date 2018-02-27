@@ -26,6 +26,7 @@ var commands = {
 
 	"avatar": { msg: require(global.DIRNAME+"/cmd/avatar").msg },
 	"osu": { msg: require(global.DIRNAME+"/cmd/osu").msg },
+	"cas": { msg: require(global.DIRNAME+"/cmd/cas").msg },
 
 	"play": { msg: require(global.DIRNAME+"/cmd/play").msg },
 

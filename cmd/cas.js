@@ -18,10 +18,10 @@ module.exports = {
 		let filename;
 		let filetype;
 		let file_url;
-		let is_url = (msg.content.toLowerCase().split(" ")[1] == "url"); 
+		let is_url = (msg.content.toLowerCase().split(" ")[1]); 
 
 		if (!msg.attachments.array()[0] && !is_url) {
-			msg.channel.send("You need to attach an image. **"+global.prefix+"cas 'url (url)' or '(image)'**");
+			msg.channel.send("You need to attach an image. **"+global.prefix+"cas (url or image)**");
 			return;
 		} else {
 			filename = msg.attachments.array()[0].filename;

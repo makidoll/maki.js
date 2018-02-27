@@ -29,6 +29,7 @@ module.exports = {
 
 		msg.channel.startTyping();
 		request(file_url, function(err, res, body) {
+			console.log("Downloading... "+file_url);
 			let file_dir = global.DIRNAME+"/tmp/"+filename;
 			fs.writeFile(file_dir, body, function(err) {
 				if (err) {
@@ -47,7 +48,7 @@ module.exports = {
 							console.log(err);
 							return;
 						}
-						
+
 						console.log(stdout);
 						msg.channel.send(fs.readFileSync(cas_file_dir));
 					});

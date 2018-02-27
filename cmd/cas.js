@@ -28,7 +28,7 @@ module.exports = {
 		}
 
 		msg.channel.startTyping();
-		request(file_url, function(err, res, body) {
+		request({url: file_url, encoding: "binary"}, function(err, res, body) {
 			console.log("Downloading... "+file_url);
 			let file_dir = global.DIRNAME+"/tmp/"+filename;
 			fs.writeFile(file_dir, body, "binary", function(err) {

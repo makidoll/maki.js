@@ -20,8 +20,8 @@ module.exports = {
 		console.log(filetype);
 
 		if (
-			filetype != "png" ||
-			filetype != "jpg" ||
+			filetype != "png" &&
+			filetype != "jpg" &&
 			filetype != "jpeg"
 		) {
 			msg.channel.send("**PNG, JPG** only!");

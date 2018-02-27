@@ -3,8 +3,9 @@ var im = require("imagemagick");
 var request = require("request");
 var Discord = require("discord.js")
 
-function getFilenameFromUrl(filename) {
-	let arr = filename.split("/");
+function getFilenameFromUrl(url) {
+	let arr = url.split("/");
+	console.log(arr);
 	return arr[arr.length-1].toLowerCase();
 }
 
@@ -63,8 +64,8 @@ module.exports = {
 				let cas_file_dir = file_dir+"_cas."+filetype;
 				setTimeout(function() {
 					im.convert([file_dir, 
-						"-liquid-rescale", "25%",
-						"-scale", "400%",
+						"-liquid-rescale", (1/3*100)+"%",
+						"-scale", (3/1*100)+"400%",
 					cas_file_dir], function(err, stdout) {
 						if (err) {
 							msg.channel.send("Error whilst converting image!");

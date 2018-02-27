@@ -29,7 +29,7 @@ module.exports = {
 			console.log(filetype)
 		}
 
-		if (!msg.attachments.array()[0]) {
+		if (!msg.attachments.array()[0] || is_url) {
 			msg.channel.send("You need to attach an image. **"+global.prefix+"cas (url or image)**");
 			return;
 		} 

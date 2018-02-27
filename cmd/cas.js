@@ -42,7 +42,11 @@ module.exports = {
 
 				let cas_file_dir = file_dir+"_cas."+filetype;
 				setTimeout(function() {
-					im.convert([file_dir, "-scale", "10%", cas_file_dir], function(err, stdout) {
+					im.convert([file_dir, 
+						"-scale", "x720", 
+						"-liquid-rescale", "50%",
+						"-scale", "200%",
+					cas_file_dir], function(err, stdout) {
 						if (err) {
 							msg.channel.send("Error whilst converting image!");
 							msg.channel.stopTyping();

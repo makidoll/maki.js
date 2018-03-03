@@ -1,10 +1,11 @@
 :question: **[prefix]help:** Shows all the usable commands.
 
-:hear_no_evil: **[prefix]avatar (user/s):** Links to a user/s avatar image.
-:game_die: **[prefix]osu (username):** Get player info from an osu! user.
 :scales: **[prefix]cas (url or image):** Content-aware scale an image.
+:small_blue_diamond: **[prefix]bluemoji (text):** Blue emojify a string of text.
 
-:loud_sound: **[prefix]play (url):** Plays a YouTube video in your channel.
+:game_die: **[prefix]osu (username):** Get player info from an osu! user.
+:hear_no_evil: **[prefix]avatar (user/s):** Links to a user/s avatar image.
+:desktop: **[prefix]server:** Shows info about the current server.
 
 :no_good: **[prefix]lewd34 (tag):** Shows an image from Rule34.
 :sweat_drops: **[prefix]lewdgel (tag):** Shows an image from Gelbooru.

@@ -2,7 +2,7 @@ var fs = require("fs");
 
 module.exports = {
 	msg: function(msg) {
-		let out = "Hey <@"+msg.author.id+">,\nI was made by `@makixx` on Github!\n\nHere are my commands:\n\n";
+		let out = "Hey "+msg.author.username+",\nI was made by `@makixx` on Github!\n\nHere are my commands:\n\n";
 		//for (var i=0; i<Object.keys(commands).length; i++) {
 		//	out +=
 		//		"**"+commands[Object.keys(commands)[i]].emoji+

@@ -24,11 +24,14 @@ global.DIRNAME = __dirname;
 var commands = {
 	"help": { msg: require(global.DIRNAME+"/cmd/help").msg },
 
-	"avatar": { msg: require(global.DIRNAME+"/cmd/avatar").msg },
-	"osu": { msg: require(global.DIRNAME+"/cmd/osu").msg },
 	"cas": { msg: require(global.DIRNAME+"/cmd/cas").msg },
+	"bluemoji": { msg: require(global.DIRNAME+"/cmd/bluemoji").msg },
 
-	"play": { msg: require(global.DIRNAME+"/cmd/play").msg },
+	"osu": { msg: require(global.DIRNAME+"/cmd/osu").msg },
+	"avatar": { msg: require(global.DIRNAME+"/cmd/avatar").msg },
+	"server": { msg: require(global.DIRNAME+"/cmd/server").msg },
+	//"play": { msg: require(global.DIRNAME+"/cmd/play").msg },
+	//:loud_sound: **[prefix]play (url):** Plays a YouTube video in your channel.
 
 	"lewd34": { msg: require(global.DIRNAME+"/cmd/lewd34").msg },
 	"lewdgel": { msg: require(global.DIRNAME+"/cmd/lewdgel").msg },
@@ -113,6 +116,13 @@ bot.on("message", function(msg) {
 		fs.writeFileSync(global.DIRNAME+"/users.json", JSON.stringify(users, null, ""));
 	}
 	
+	// !! aaaaah
+	if (msg.content == "!!") {
+		let name = msg.author.username.toLowerCase();
+		msg.channel.send("shh "+name+"... i love you. everything will be okay. :heart:")
+		return;
+	}
+
 	// Commands
 	if (msg.content.startsWith(global.prefix)) {
 		let cmd = msg.content.toLowerCase().slice(global.prefix.length).split(" ")[0];

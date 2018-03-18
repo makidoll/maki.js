@@ -35,16 +35,16 @@ module.exports = {
 			filename = msg.attachments.array()[0].filename;
 			filetype = getFiletype(filename); 
 			file_url = msg.attachments.array()[0].url;
-
-			if (
-				filetype != "png" &&
-				filetype != "jpg" &&
-				filetype != "jpeg"
-   			) {
-				msg.channel.send("**PNG, JPG** only!");
-				return;
-			}	
 		}
+
+		if (
+			filetype != "png" &&
+			filetype != "jpg" &&
+			filetype != "jpeg"
+   		) {
+			msg.channel.send("**PNG, JPG** only!");
+			return;
+		}	
 
 		msg.channel.startTyping();
 		request({url: file_url, encoding: "binary"}, function(err, res, body) {
@@ -79,6 +79,11 @@ module.exports = {
 						console.log(stdout);
 						msg.channel.send(new Discord.Attachment(cas_file_dir));
 						msg.channel.stopTyping();
+
+						// update stats
+						let stats = JSON.parse(fs.readFileSync(global.DIRNAME+"/stats.json", "utf8"));
+						stats["casConverts"]++;
+						fs.writeFileSync(global.DIRNAME+"/stats.json", JSON.stringify(stats));
 					});
 				}, 200);
 			});

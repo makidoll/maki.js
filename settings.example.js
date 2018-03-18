@@ -1,6 +1,7 @@
 module.exports = {
 	prefix: "!",
 	game: "!help",
+	port: 6969,
 
 	token: {
 		discord: "",

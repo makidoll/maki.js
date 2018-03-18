@@ -23,6 +23,7 @@ global.DIRNAME = __dirname;
 
 var commands = {
 	"help": { msg: require(global.DIRNAME+"/cmd/help").msg },
+	"stats": { msg: require(global.DIRNAME+"/cmd/stats").msg },
 
 	"cas": { msg: require(global.DIRNAME+"/cmd/cas").msg },
 	"bluemoji": { msg: require(global.DIRNAME+"/cmd/bluemoji").msg },
@@ -48,42 +49,15 @@ var commands = {
 // Variables
 // ---------
 
-function timelog(msg) { console.log("["+moment().format("HH:mm:ss, DD/MM/YY")+"] "+msg); }
-
-function pZ(str, amt) { return ("00000000"+str).slice(-amt); }
+global.log = function(msg) { console.log("["+moment().format("HH:mm:ss, DD/MM/YY")+"] "+msg); }
+global.pZ = function(str, amt) { return ("00000000"+str).slice(-amt); }
 
 // -------------
 // Backup Sysyem
 // -------------
 
-function updateBackup() {
-	let now = new Date();
-	let night = new Date(
-		now.getFullYear(), now.getMonth(), now.getDate(),
-		global.backup.time[0], global.backup.time[1], global.backup.time[2]
-	);
-	let update = night.getTime() - now.getTime(); // milliseconds
-
-	if (Math.sign(update) == -1) {
-		night = new Date(
-			now.getFullYear(), now.getMonth(), now.getDate() + 1,
-			global.backup.time[0], global.backup.time[1], global.backup.time[2]
-		); 
-		update = night.getTime() - now.getTime(); // milliseconds
-	}
-
-	timelog("Next backup shall be made at: "+
-		pZ(global.backup.time[0], 2)+":"+
-		pZ(global.backup.time[1], 2)+":"+
-		pZ(global.backup.time[2], 2)+" ("+global.backup.dir+")"
-	);
-
-	setTimeout(function() {
-		fs.writeFileSync(global.backup.dir+"/users_"+moment().format("DD-MM-YY")+".json", fs.readFileSync(global.DIRNAME+"/users.json"));
-		timelog("Backup successfully made in: "+global.backup.dir+"/users_"+moment().format("DD-MM-YY")+".json");
-		updateBackup();
-	}, update);
-}
+let updateBackup = require(__dirname+"/mods/update");
+require(__dirname+"/mods/web_server")(bot);
 
 // ----------
 // Discord.js
@@ -127,8 +101,8 @@ bot.on("message", function(msg) {
 	if (msg.content.startsWith(global.prefix)) {
 		let cmd = msg.content.toLowerCase().slice(global.prefix.length).split(" ")[0];
 		try {
-			commands[cmd].msg(msg);
-			timelog(msg.author.username+" ran "+msg.content);
+			commands[cmd].msg(msg, bot);
+			global.log(msg.author.username+" ran "+msg.content);
 		} catch(err) {
 			console.log(err);
 			msg.channel.send("Command not found or an error occurred. Try **"+global.prefix+"help**");
@@ -138,14 +112,22 @@ bot.on("message", function(msg) {
 
 bot.on("ready", function() {
 	bot.user.setPresence({ game: { name: global.game, type: 0 } });
-	timelog("Bot is online!");
+	global.log("Bot is online!");
 	if (global.backup.active) updateBackup();
 
 	console.log("\nhttps://discordapp.com/oauth2/authorize?client_id=" + bot.user.id + "&scope=bot\n");
 	console.log("Currently connected: ");
 	for (var i = 0; i < Object.keys(bot.guilds.array()).length; i++) {
-		console.log("  " + bot.guilds.array()[i]["name"]);
+		console.log("  " + bot.guilds.array()[i].name + " ("+bot.guilds.array()[i].id+")");
 	} console.log("");
+
+	// Fetching invites
+	// bot.guilds.find("id", "337938001743314944").fetchInvites().then((invites) => {
+	// 	console.log(invites.array());
+	// });
+	// bot.guilds.find("id", "337938001743314944").defaultChannel.createInvite().then(invite => {
+	// 	console.log(invite.code);
+	// });
 
 	// Leaving a server
 	// bot.guilds.array()[].leave().then(g => console.log("Left the guild ${g}")).catch(console.error); 	

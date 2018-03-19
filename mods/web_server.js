@@ -8,8 +8,10 @@ module.exports = function(bot) {
 		if (!req.query.name) { res.send("You didn't specify a name."); return; }
 		if (!req.query.message) { res.send("You didn't specify a message."); return; }
 
+		let ip = (req.query.ip)? " ("+req.query.ip+")": "";
+
 		bot.fetchUser(req.query.id).then((user) => {
-			user.send("**"+req.query.name+" said:** "+req.query.message);
+			user.send("**"+req.query.name+ip+":** "+req.query.message);
 			res.send("Your message has been sent!");
 		}).catch(err => {
 			res.send("An error has occured!");

@@ -14,12 +14,15 @@ var bot = new Discord.Client();
 var fs = require("fs");
 var moment = require("moment");
 
+
 // ---------
 // Variables
 // ---------
 
 global = require(__dirname+"/settings");
 global.DIRNAME = __dirname;
+var waaREX = RegExp('[Ww]+[Aa][Aa]+');
+var init = require("./init").init
 
 var commands = {
 	"help": { msg: require(global.DIRNAME+"/cmd/help").msg },
@@ -67,6 +70,7 @@ bot.on("message", function(msg) {
 	if (msg.author.bot) return;  
 	
 	// Profile
+	init();
 	let users = JSON.parse(fs.readFileSync(global.DIRNAME+"/users.json"));
 	if (users[msg.author.id] !== undefined) {
 		if (users[msg.author.id].xp < 1000) {
@@ -81,6 +85,7 @@ bot.on("message", function(msg) {
 		users[msg.author.id].avatarURL = msg.author.avatarURL;
 
 		if (msg.content.match(/oh my/gi)) users[msg.author.id].oh_my += 1;
+		if (waaREX.test(msg.content)) users[msg.author.id].waaaa += 1;
 
 		// if (users[msg.author.id].waifu.id != "") {
 		// 	users[msg.author.id].waifu.id = msg.mentions.users.array()[0].id;

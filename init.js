@@ -1,12 +1,12 @@
 var fs = require("fs");
 
-function exampleCopy(file, exampleFile) {
+function exampleCopy(file, example) {
 	if (!fs.existsSync(global.DIRNAME+"/"+file)) {
-		fs.copyFileSync(global.DIRNAME+"/"+exampleFile, global.DIRNAME+"/"+file);
+		fs.writeFileSync(global.DIRNAME+"/"+file, example);
 		global.log("Successfully created new "+file+" file.");
 	}
 }
 
 module.exports = function() {
-	exampleCopy("user.json", "users.example.json");
+	exampleCopy("user.json", JSON.stringify({}));
 }

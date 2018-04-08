@@ -1,19 +1,12 @@
 var fs = require("fs");
-var moment = require("moment");
-var svg = require("svg2img");
-var Datauri = require("datauri");
-var datauri = new Datauri();
-var requests = require("sync-request");
 
-module.exports = {
-	init: function() {
-		var usersFileName = global.DIRNAME+"/users.json";
-		let users = null;
-		if(fs.existsSync(usersFileName)) {
-			//console.log("Users file exists, exiting command now");
-		} else {
-			fs.copyFileSync("users.example.json", "users.json");
-			console.log("Successfully created new users.json file.");
-		}
+function exampleCopy(file, exampleFile) {
+	if (!fs.existsSync(global.DIRNAME+"/"+file)) {
+		fs.copyFileSync(global.DIRNAME+"/"+exampleFile, global.DIRNAME+"/"+file);
+		global.log("Successfully created new "+file+" file.");
 	}
+}
+
+module.exports = function() {
+	exampleCopy("user.json", "users.example.json");
 }

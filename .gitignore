@@ -3,3 +3,4 @@ package-lock.json
 tmp/
 settings.js
 users.json
+stats.json

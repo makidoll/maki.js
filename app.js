@@ -13,6 +13,7 @@ var Discord = require("discord.js");
 var bot = new Discord.Client();
 var fs = require("fs");
 var moment = require("moment");
+var waaREX = RegExp('[Ww]+[Aa][Aa]+');
 
 // ---------
 // Variables
@@ -81,6 +82,7 @@ bot.on("message", function(msg) {
 		users[msg.author.id].avatarURL = msg.author.avatarURL;
 
 		if (msg.content.match(/oh my/gi)) users[msg.author.id].oh_my += 1;
+		if (waaREX.test(msg.content)) users[msg.author.id].waaaa += 1;
 
 		// if (users[msg.author.id].waifu.id != "") {
 		// 	users[msg.author.id].waifu.id = msg.mentions.users.array()[0].id;

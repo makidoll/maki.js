@@ -50,7 +50,7 @@ module.exports = {
 			.replace(/\[coins\]/g, users[user.id].coins)
 			.replace(/\[username\]/g, user.username)
 			.replace(/\[oh_my\]/g, users[user.id].oh_my + " times")
-			.replace(/\[waaaa\]/g, "(im bad at regEX SORRYYYYY)")
+			.replace(/\[waaaa\]/g, users[user.id].waaaa + " times")
 			.replace(/\[desc\]/g, desc),
 		function(err, buffer) {
 			msg.channel.stopTyping();

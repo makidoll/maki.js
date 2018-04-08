@@ -2,7 +2,7 @@ var request = require("request");
 
 module.exports = {
 	msg: function(msg) {
-		if (!msg.channel.nsfw && msg.channel.name != "lewd") { msg.channel.send("You can only use this command in **NSFW** channels."); msg.channel.stopTyping(); return; }
+		if (!msg.channel.nsfw && !(msg.channel.type === "dm")) { msg.channel.send("You can only use this command in **NSFW** channels."); msg.channel.stopTyping(); return; }
 		if (msg.content.split(" ")[1] == undefined) { msg.channel.send("Incorrect syntax! Try **"+global.prefix+"lewdgel (tag)**"); msg.channel.stopTyping(); return; }
 
 		let tag = msg.content.split(" ")[1].toLowerCase();

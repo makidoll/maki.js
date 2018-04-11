@@ -26,7 +26,7 @@ var commands = {
 	"stats": { msg: require(global.DIRNAME+"/cmd/stats").msg },
 
 	"cas": { msg: require(global.DIRNAME+"/cmd/cas").msg },
-	"bluemoji": { msg: require(global.DIRNAME+"/cmd/bluemoji").msg },
+	"bluetext": { msg: require(global.DIRNAME+"/cmd/bluemoji").msg },
 
 	"osu": { msg: require(global.DIRNAME+"/cmd/osu").msg },
 	"avatar": { msg: require(global.DIRNAME+"/cmd/avatar").msg },

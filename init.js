@@ -8,5 +8,5 @@ function exampleCopy(file, example) {
 }
 
 module.exports = function() {
-	exampleCopy("user.json", JSON.stringify({}));
+	exampleCopy("users.json", JSON.stringify({}));
 }

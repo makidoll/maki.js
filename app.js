@@ -37,6 +37,7 @@ var commands = {
 	"lewd34": { msg: require(global.DIRNAME+"/cmd/lewd34").msg },
 	"lewdgel": { msg: require(global.DIRNAME+"/cmd/lewdgel").msg },
 	"lewdkona": { msg: require(global.DIRNAME+"/cmd/lewdkona").msg },
+	"lewde621": { msg: require(global.DIRNAME+"/cmd/lewde621").msg },
 
 	"profile": { msg: require(global.DIRNAME+"/cmd/profile").msg },
 	"waifu": { msg: require(global.DIRNAME+"/cmd/waifu").msg },

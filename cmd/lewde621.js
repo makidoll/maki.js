@@ -8,8 +8,13 @@ module.exports = {
 		let tag = msg.content.split(" ")[1].toLowerCase();
 		msg.channel.startTyping();
 
-		request("https://e621.net/post/index.json?tags="+tag, function (err, res, body) {
-			if (err) { msg.channel.send("Oh no! Gelbooru isn't working."); msg.channel.stopTyping(); return; }
+		request({
+			url: "https://e621.net/post/index.json?tags="+tag,
+			headers: {
+				"User-Agent": "Maki.js"
+			}
+		}, function (err, res, body) {
+			if (err) { msg.channel.send("Oh no! e621 isn't working."); msg.channel.stopTyping(); return; }
 
 			var json = JSON.parse(body);
 			try {

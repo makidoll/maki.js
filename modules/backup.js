@@ -23,7 +23,7 @@ module.exports = function() {
 	);
 
 	setTimeout(function() {
-		fs.writeFileSync(global.backup.dir+"/users_"+moment().format("DD-MM-YY")+".json", fs.readFileSync(global.DIRNAME+"/users.json"));
+		fs.writeFileSync(global.backup.dir+"/users_"+moment().format("DD-MM-YY")+".json", fs.readFileSync(global.__dirname+"/users.json"));
 		global.log("Backup successfully made in: "+global.backup.dir+"/users_"+moment().format("DD-MM-YY")+".json");
 		module.exports();
 	}, update);

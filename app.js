@@ -19,31 +19,43 @@ var moment = require("moment");
 // ---------
 
 global = require(__dirname+"/settings");
-global.DIRNAME = __dirname;
+global.__dirname = __dirname;
+var db = require(__dirname+"/modules/database");
+
+// "profile",
+// "waifu",
+// "desc",
+// "coinflip"
 
 var commands = {
-	"help": { msg: require(global.DIRNAME+"/cmd/help").msg },
-	"stats": { msg: require(global.DIRNAME+"/cmd/stats").msg },
+	"Core": [":star:",
+		["help", "stats"]
+	],
+	"Fun": [":tada:",
+		["cas", "bluetext"]
+	],
+	"Profile": [":hibiscus:",
+		["profile", "bg"]
+	],
+	"Lewd": [":sweat_drops:",
+		["e621", "rule34", "gelbooru", "konachan"]
+	],
+	"Info": [":question:",
+		["osu", "avatar", "server"]
+	],
+}
 
-	"cas": { msg: require(global.DIRNAME+"/cmd/cas").msg },
-	"bluetext": { msg: require(global.DIRNAME+"/cmd/bluemoji").msg },
+global.commands = JSON.parse(JSON.stringify(commands));
 
-	"osu": { msg: require(global.DIRNAME+"/cmd/osu").msg },
-	"avatar": { msg: require(global.DIRNAME+"/cmd/avatar").msg },
-	"server": { msg: require(global.DIRNAME+"/cmd/server").msg },
-	//"play": { msg: require(global.DIRNAME+"/cmd/play").msg },
-	//:loud_sound: **[prefix]play (url):** Plays a YouTube video in your channel.
+commands = {};
+for (var x=0; x<Object.keys(global.commands).length; x++) {
 
-	"lewd34": { msg: require(global.DIRNAME+"/cmd/lewd34").msg },
-	"lewdgel": { msg: require(global.DIRNAME+"/cmd/lewdgel").msg },
-	"lewdkona": { msg: require(global.DIRNAME+"/cmd/lewdkona").msg },
-	"lewde621": { msg: require(global.DIRNAME+"/cmd/lewde621").msg },
-
-	"profile": { msg: require(global.DIRNAME+"/cmd/profile").msg },
-	"waifu": { msg: require(global.DIRNAME+"/cmd/waifu").msg },
-	"desc": { msg: require(global.DIRNAME+"/cmd/desc").msg },
-
-	"coinflip": { msg: require(global.DIRNAME+"/cmd/coinflip").msg },
+	let key = Object.keys(global.commands)[x];
+	for (var y=0; y<global.commands[key][1].length; y++) {
+		let cmd = global.commands[key][1][y];
+		commands[cmd] = require(global.__dirname+"/commands/"+
+			key.toLowerCase().replace(/ /g, "_")+"/"+cmd);
+	}
 }
 
 // ---------
@@ -53,13 +65,6 @@ var commands = {
 global.log = function(msg) { console.log("["+moment().format("HH:mm:ss, DD/MM/YY")+"] "+msg); }
 global.pZ = function(str, amt) { return ("00000000"+str).slice(-amt); }
 
-// -------------
-// Backup Sysyem
-// -------------
-
-let updateBackup = require(__dirname+"/mods/update");
-require(__dirname+"/mods/web_server")(bot);
-
 // ----------
 // Discord.js
 // ----------
@@ -67,43 +72,21 @@ require(__dirname+"/mods/web_server")(bot);
 bot.on("message", function(msg) {
 	if (msg.author.bot) return;  
 	
-	// Profile
-	let users = JSON.parse(fs.readFileSync(global.DIRNAME+"/users.json"));
-	if (users[msg.author.id] !== undefined) {
-		if (users[msg.author.id].xp < 1000) {
-			users[msg.author.id].xp += 1;
-		} else {
-			users[msg.author.id].level += 1;
-			users[msg.author.id].xp = 0;
-			msg.channel.send("Yay, <@"+msg.author.id+"> leveled up from **"+(users[msg.author.id].level-1)+"** to **"+(users[msg.author.id].level)+"**!");
-		}
-		
-		users[msg.author.id].username = msg.author.username;
-		users[msg.author.id].avatarURL = msg.author.avatarURL;
-
-		if (msg.content.match(/oh my/gi)) users[msg.author.id].oh_my += 1;
-		if (msg.content.match(/waa/gi)) users[msg.author.id].waaaa += 1;
-
-		// if (users[msg.author.id].waifu.id != "") {
-		// 	users[msg.author.id].waifu.id = msg.mentions.users.array()[0].id;
-		// 	users[msg.author.id].waifu.username = msg.mentions.users.array()[0].username+" 💕";
-		// }
-
-		fs.writeFileSync(global.DIRNAME+"/users.json", JSON.stringify(users, null, ""));
-	}
+	// profile
+	db.update_msg(msg);
 	
 	// !! aaaaah
-	if (msg.content == "!!") {
+	if (msg.content.substring(0,2) == "!!") {
 		let name = msg.author.username.toLowerCase();
 		msg.channel.send("shh "+name+"... i love you. everything will be okay. :heart:")
 		return;
 	}
 
-	// Commands
-	if (msg.content.startsWith(global.prefix)) {
+	// commands
+	if (msg.content.substring(0, global.prefix.length) == global.prefix) {
 		let cmd = msg.content.toLowerCase().slice(global.prefix.length).split(" ")[0];
 		try {
-			commands[cmd].msg(msg, bot);
+			commands[cmd](msg, bot);
 			global.log(msg.author.username+" ran "+msg.content);
 		} catch(err) {
 			console.log(err);
@@ -115,7 +98,8 @@ bot.on("message", function(msg) {
 bot.on("ready", function() {
 	bot.user.setPresence({ game: { name: global.game, type: 0 } });
 	global.log("Bot is online!");
-	if (global.backup.active) updateBackup();
+	if (global.backup.active) require(__dirname+"/modules/backup")();
+	if (global.web.active) require(__dirname+"/modules/web_server")(bot);
 
 	console.log("\nhttps://discordapp.com/oauth2/authorize?client_id=" + bot.user.id + "&scope=bot\n");
 	console.log("Currently connected: ");
@@ -135,8 +119,8 @@ bot.on("ready", function() {
 	// bot.guilds.array()[].leave().then(g => console.log("Left the guild ${g}")).catch(console.error); 	
 
 	// Setting avatar
-	// bot.user.setAvatar(global.DIRNAME+"/img/avatar.png")
+	// bot.user.setAvatar(global.__dirname+"/img/avatar.png")
 });
 
-require(global.DIRNAME+"/init")();
 bot.login(global.token.discord);
+db.init();

@@ -19,8 +19,8 @@ module.exports = function(bot) {
 	});
 
 
-	app.listen(global.port, () => {
-		global.log("Web server open at *:"+global.port);
+	app.listen(global.web.port, () => {
+		global.log("Web server open at *:"+global.web.port);
 	}); 
 
 }

@@ -4,3 +4,4 @@ settings.js
 database.db
 users.json
 backgrounds/*.png
+private/

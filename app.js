@@ -21,8 +21,9 @@ var moment = require("moment");
 global = require(__dirname+"/settings");
 global.__dirname = __dirname;
 var db = require(__dirname+"/modules/database");
+var private = fs.existsSync(global.__dirname+"/private");
+if (private) var privateApp = require(global.__dirname+"/private/app");
 
-// "profile",
 // "waifu",
 // "desc",
 // "coinflip"
@@ -69,7 +70,9 @@ global.pZ = function(str, amt) { return ("00000000"+str).slice(-amt); }
 // Discord.js
 // ----------
 
+
 bot.on("message", function(msg) {
+	if (private) privateApp.onMessage(msg, bot);
 	if (msg.author.bot) return;  
 	
 	// profile
@@ -96,8 +99,10 @@ bot.on("message", function(msg) {
 });
 
 bot.on("ready", function() {
-	bot.user.setPresence({ game: { name: global.game, type: 0 } });
 	global.log("Bot is online!");
+	if (private) privateApp.onReady(bot);
+	bot.user.setPresence({ game: { name: global.game, type: 0 } });
+
 	if (global.backup.active) require(__dirname+"/modules/backup")();
 	if (global.web.active) require(__dirname+"/modules/web_server")(bot);
 
@@ -108,10 +113,10 @@ bot.on("ready", function() {
 	} console.log("");
 
 	// Fetching invites
-	// bot.guilds.find("id", "337938001743314944").fetchInvites().then((invites) => {
+	// bot.guilds.find("id", "338094195501694976").fetchInvites().then((invites) => {
 	// 	console.log(invites.array());
 	// });
-	// bot.guilds.find("id", "337938001743314944").defaultChannel.createInvite().then(invite => {
+	// bot.guilds.find("id", "338094195501694976").defaultChannel.createInvite().then(invite => {
 	// 	console.log(invite.code);
 	// });
 

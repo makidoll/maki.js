@@ -33,7 +33,7 @@ var commands = {
 		["help", "stats"]
 	],
 	"Fun": [":tada:",
-		["cas", "bluetext"]
+		["cas", "hoh", "hah", "text"]
 	],
 	"Profile": [":hibiscus:",
 		["profile", "bg"]
@@ -86,7 +86,7 @@ bot.on("message", function(msg) {
 	}
 
 	// commands
-	if (msg.content.substring(0, global.prefix.length) == global.prefix) {
+	if (msg.content.toLowerCase().substring(0, global.prefix.length) == global.prefix) {
 		let cmd = msg.content.toLowerCase().slice(global.prefix.length).split(" ")[0];
 		try {
 			commands[cmd](msg, bot);

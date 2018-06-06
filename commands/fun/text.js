@@ -13,7 +13,11 @@ var num = {
 
 module.exports = function(msg) {
 
-	var text = msg.content.slice(global.prefix.length+9) // bluemoji+" " = 9
+	var text = msg.content.slice(global.prefix.length+5) // text+" " = 5
+	if (!text) {
+		msg.channel.send("You need to say something. **"+global.prefix+"text (message)**");
+		return;
+	}
 
 	var out = "";
 	var res = text.match(/[0123456789abcdefghijklmnopqrstuvwxyz\ ]/gi);
@@ -28,5 +32,5 @@ module.exports = function(msg) {
 	}
 
 	msg.channel.send(out);
-
+	global.db.exec("UPDATE stats SET value = value + 1 WHERE key = 'text';");
 }

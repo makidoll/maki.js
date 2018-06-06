@@ -1,7 +1,7 @@
 var fs = require("fs");
-var im = require("imagemagick");
 var request = require("request");
-var Discord = require("discord.js")
+var Discord = require("discord.js");
+const { spawn } = require("child_process");
 
 function getFilenameFromUrl(url) {
 	let arr = url.split("/");
@@ -11,6 +11,11 @@ function getFilenameFromUrl(url) {
 function getFiletype(filename) {
 	let arr = filename.split(".");
 	return arr[arr.length-1].toLowerCase();
+}
+
+function child(cmd, args, fClose) {
+	const c = spawn(cmd, args);
+	c.on("close", fClose);
 }
 
 module.exports = function(msg) {
@@ -26,7 +31,7 @@ module.exports = function(msg) {
 	}
 
 	if (!msg.attachments.array()[0] && !is_url) {
-		msg.channel.send("You need to attach an image. **"+global.prefix+"magic (url or image)**");
+		msg.channel.send("You need to attach an image. **"+global.prefix+"hoh (url or image)**");
 		return;
 	} 
 
@@ -62,27 +67,40 @@ module.exports = function(msg) {
 				console.log(err);
 			}
 
-			let cas_file_dir = file_dir+"_cas."+filetype;
-			setTimeout(function() {
-				im.convert([file_dir, 
-					"-scale", "x720",
-					"-liquid-rescale", (1/3*100)+"%",
-					"-scale", (3/1*100)+"%",
-				cas_file_dir], function(err, stdout) {
-					if (err) {
+			child("convert", [file_dir, "-gravity", "East", "-chop", "50%x0", file_dir+"_l."+filetype], (close) => {
+				if (close != 0) {
+					msg.channel.send("Error whilst converting image!");
+					msg.channel.stopTyping();
+					global.log(err);
+					return;
+				}
+
+				child("convert", [file_dir+"_l."+filetype, "-flop", file_dir+"_r."+filetype], (close) => {
+					if (close != 0) {
 						msg.channel.send("Error whilst converting image!");
 						msg.channel.stopTyping();
 						global.log(err);
 						return;
 					}
 
-					msg.channel.send(new Discord.Attachment(cas_file_dir));
-					msg.channel.stopTyping();
+					child("montage", [file_dir+"_l."+filetype, file_dir+"_r."+filetype, 
+						"-geometry", "+0+0", "-background", "none", file_dir+"_hoh."+filetype], (close) => {
+						if (close != 0) {
+							msg.channel.send("Error whilst converting image!");
+							msg.channel.stopTyping();
+							global.log(err);
+							return;
+						}
 
-					// update stats
-					global.db.exec("UPDATE stats SET value = value + 1 WHERE key = 'magic';");
-				});
-			}, 200);
-		});
-	});
+						msg.channel.send(new Discord.Attachment(file_dir+"_hoh."+filetype));
+						msg.channel.stopTyping();
+
+						global.db.exec("UPDATE stats SET value = value + 1 WHERE key = 'hoh';");
+					}); // holy
+				}); // fucking
+			}); // shit
+			// classic js callback hell
+
+		}); // ahem fs write the users file
+	}); // request() DOWNLOADING THE FILE
 }

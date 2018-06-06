@@ -3,6 +3,12 @@ var Database = require("better-sqlite3");
 
 global.db = new Database(global.__dirname+"/database.db");
 
+function addStat(key, def) {
+	global.db.exec("INSERT INTO stats (key, value)"+
+		"SELECT '"+key+"', "+def+" "+
+		"WHERE NOT EXISTS(SELECT 1 FROM stats WHERE key = '"+key+"');");
+}
+
 module.exports = {
 	init: function() {
 		global.db.exec("CREATE TABLE IF NOT EXISTS users ("+
@@ -23,9 +29,10 @@ module.exports = {
 			"value INT"+
 		");");
 
-		global.db.exec("INSERT INTO stats (key, value)"+
-			"SELECT 'cas_converts', 0 "+
-			"WHERE NOT EXISTS(SELECT 1 FROM stats WHERE key = 'cas_converts');");
+		addStat("cas", 0);
+		addStat("hoh", 0);
+		addStat("hah", 0);
+		addStat("text", 0);
 	},
 
 	update_user: function(user) {

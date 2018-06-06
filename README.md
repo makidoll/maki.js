@@ -18,7 +18,6 @@ git clone https://gitlab.com/makitty/maki.js
 cd maki.js
 npm install
 cp settings.example.js settings.js
-cp users.example.json users.json
 ```
 Edit `settings.js` and set the tokens.
 

@@ -6,6 +6,7 @@
 
 **Dependencies:**
 
+- Linux (Windows isn't going to work sorry. Issues with `svg2img` and `imagemagick`)
 - https://github.com/Automattic/node-canvas#installation
 - Google Font: Roboto `pacman -Sy ttf-roboto`
 - ImageMagick

@@ -35,4 +35,4 @@ node app.js
 ```
 ## Contribute
 
-Feel free to fork or send pull requests! I originally didn't want to upload this to Github but *mommy told me to...*
+Feel free to fork or send pull requests!

@@ -12,7 +12,7 @@
 Suspecting you're using Linux:
 
 ```sh
-git clone https://github.com/makixx/maki.js
+git clone https://gitlab.com/makitty/maki.js
 cd maki.js
 npm install
 cp settings.example.js settings.js

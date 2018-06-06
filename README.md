@@ -8,6 +8,7 @@
 
 - https://github.com/Automattic/node-canvas#installation
 - Google Font: Roboto `pacman -Sy ttf-roboto`
+- ImageMagick
 
 Suspecting you're using Linux:
 

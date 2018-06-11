@@ -6,17 +6,18 @@
 
 **Dependencies:**
 
+- Linux (Windows isn't going to work sorry. Issues with `svg2img` and `imagemagick`)
 - https://github.com/Automattic/node-canvas#installation
 - Google Font: Roboto `pacman -Sy ttf-roboto`
+- ImageMagick
 
 Suspecting you're using Linux:
 
 ```sh
-git clone https://github.com/makixx/maki.js
+git clone https://gitlab.com/makitty/maki.js
 cd maki.js
 npm install
 cp settings.example.js settings.js
-cp users.example.json users.json
 ```
 Edit `settings.js` and set the tokens.
 

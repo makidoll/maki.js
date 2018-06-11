@@ -32,6 +32,7 @@ module.exports = {
 		addStat("cas", 0);
 		addStat("hoh", 0);
 		addStat("hah", 0);
+		addStat("dont", 0);
 		addStat("text", 0);
 	},
 

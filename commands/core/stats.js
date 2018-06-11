@@ -8,9 +8,10 @@ function getStat(key) {
 module.exports = function(msg, bot) {
 	let p = global.prefix;
 	let fun = 
-		"**"+p+"magic:** "+getStat("magic")+"\n"+
+		"**"+p+"cas:** "+getStat("cas")+"\n"+
 		"**"+p+"hoh:** "+getStat("hoh")+"\n"+
 		"**"+p+"hah:** "+getStat("hah")+"\n"+
+		"**"+p+"dont:** "+getStat("dont")+"\n"+
 		"**"+p+"text:** "+getStat("text");
 
 	let cuties = global.db.prepare("SELECT COUNT(id) AS count FROM users;").get().count;

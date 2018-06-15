@@ -29,12 +29,9 @@ module.exports = {
 			"value INT"+
 		");");
 
-		addStat("cas", 0);
-		addStat("hoh", 0);
-		addStat("hah", 0);
-		addStat("dont", 0);
-		addStat("text", 0);
-		addStat("isthisa", 0);
+		global.commands["Fun"][1].forEach((e, i) => {
+			addStat(e, 0);
+		});
 	},
 
 	update_user: function(user) {

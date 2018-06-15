@@ -36,7 +36,7 @@ var commands = {
 		["cas", "hoh", "hah", "dont", "text", "isthisa"]
 	],
 	"Profile": [":hibiscus:",
-		["profile", "bg"]
+		["profile", "waifu", "bg"]
 	],
 	"Lewd": [":sweat_drops:",
 		["e621", "rule34", "gelbooru", "konachan"]
@@ -90,7 +90,10 @@ bot.on("message", function(msg) {
 		let cmd = msg.content.toLowerCase().slice(global.prefix.length).split(" ")[0];
 		try {
 			commands[cmd](msg, bot);
-			global.log(msg.author.username+" ran "+msg.content);
+			global.log(
+				((msg.guild)? "("+msg.guild.name+") ": "")+
+				msg.author.username+" ran "+msg.content
+			);
 		} catch(err) {
 			console.log(err);
 			msg.channel.send("Command not found or an error occurred. Try **"+global.prefix+"help**");

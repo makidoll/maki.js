@@ -6,24 +6,36 @@ var datauri = new Datauri();
 var requests = require("sync-request");
 var db = require(global.__dirname+"/modules/database");
 
+var waifu_pos = [
+	{x:15,y:185},
+	{x:50,y:185},
+	{x:85,y:185},
+	{x:15,y:220},
+	{x:50,y:220},
+	{x:85,y:220},
+	{x:15,y:255},
+	{x:50,y:255},
+	{x:85,y:255},
+];
+
 module.exports = function(msg) {
 	msg.channel.startTyping();
 
-	let user_id = null;
+	let discord_user = null;
 	if (msg.mentions.users.array()[0]) {
-		user_id = msg.mentions.users.array()[0].id;
-		db.update_user(msg.author);
+		discord_user = msg.mentions.users.array()[0];
+		db.update_user(discord_user);
 	} else {
-		user_id = msg.author.id;
+		discord_user = msg.author;
 	}
 	
-	let user = global.db.prepare("SELECT * FROM users WHERE id = ?").get(user_id);
+	let user = global.db.prepare("SELECT * FROM users WHERE id = ?").get(discord_user.id);
 
-	let avatar = "data:image/png;base64,0;";
-	if (msg.author.avatarURL) avatar = datauri.format(".png", requests("GET", msg.author.avatarURL).getBody()).content;
+	let avatar = "";
+	if (discord_user.displayAvatarURL) avatar = datauri.format(".png", requests("GET", discord_user.displayAvatarURL).getBody()).content;
 
 	// let desc = '<tspan x="30" dy="1.1em">'+users[user.id].desc.match(/.{1,34}/g).join('</tspan><tspan x="30" dy="1.1em">')+"</tspan>";
-	let waifus = [];
+	let waifu = (user.waifu)? JSON.parse(user.waifu): [];
 
 	svg = fs.readFileSync(global.__dirname+"/svg/profile.svg", "utf8")
 		.replace(/\[username\]/g, user.username)
@@ -32,11 +44,20 @@ module.exports = function(msg) {
 		.replace(/\[xp\]/g, user.xp)
 		.replace(/\[xp-x\]/g, (user.xp/1000*270)+130)
 		.replace(/\[xp-width\]/g, 270-(user.xp/1000*270))
-		.replace(/\[background\]/g, 
-			(user.bg)? global.__dirname+"/backgrounds/"+user.bg: "")
+		.replace(/\[background\]/g, (user.bg)? global.__dirname+user.bg: "")
 
-	if (waifus != []) {
-		svg = svg.replace(/<waifu>([\S\s]*?)<\/waifu>/g, "");
+	if (waifu.length>0) {
+		let waifu_svg = "";
+		waifu_svg += '<rect clip-path="url(#background)" width="130" height="120" y="180" fill="#fff"/>';
+		waifu.forEach((id, i) => {
+			if (i>9) return;
+			waifu_svg += '<image height="30" width="30" x="'+
+				waifu_pos[i].x+'" y="'+
+				waifu_pos[i].y+'" clip-path="url(#waifu-'+i+')" href="'+
+				datauri.format(".png", fs.readFileSync(global.__dirname+"/cache/avatars/"+id+".png")).content+'"/>';
+		});
+
+		svg = svg.replace(/<!--\[waifu\]-->/g, waifu_svg);
 	}
 
 	svgImg(svg, function(err, buffer) {
@@ -52,11 +73,11 @@ module.exports = function(msg) {
 	// 	"embed": {
 	// 		"author": {
 	// 			"name": msg.author.username,
-	// 			"icon_url": msg.author.avatarURL
+	// 			"icon_url": msg.author.displayAvatarURL
 	// 		},
 	// 		"url": "https://maki.cat/js",
 	// 		"thumbnail": {
-	// 			"url": msg.author.avatarURL
+	// 			"url": msg.author.displayAvatarURL
 	// 		},
 	// 		"fields": [
 	// 			{

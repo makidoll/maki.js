@@ -34,6 +34,7 @@ module.exports = {
 		addStat("hah", 0);
 		addStat("dont", 0);
 		addStat("text", 0);
+		addStat("isthisa", 0);
 	},
 
 	update_user: function(user) {

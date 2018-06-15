@@ -16,41 +16,31 @@ function getFiletype(filename) {
 }
 
 module.exports = function(msg) {
-	let filename;
-	let filetype;
-	let file_url;
-	let is_url = (msg.content.toLowerCase().split(" ")[1]);
+	let quote = msg.content.slice(global.prefix.length + "isthisa ".length);
 
-	if (is_url) {
-		file_url = msg.content.toLowerCase().split(" ")[1];
-		filename = getFilenameFromUrl(file_url);
-		filetype = getFiletype(filename);
-	}
-
-	if (!msg.attachments.array()[0] && !is_url) {
-		msg.channel.send("You need to attach an image. **"+global.prefix+"dont (url or image)**");
+	if (!msg.attachments.array()[0] || !quote) {
+		msg.channel.send("You need to attach an image and say a quote. **"+global.prefix+"isthisa (quote) (attached image)**");
 		return;
 	} 
 
-	if (!is_url) {
-		filename = msg.attachments.array()[0].filename;
-		filetype = getFiletype(filename); 
-		file_url = msg.attachments.array()[0].url;
-	}
+	let filename = msg.attachments.array()[0].filename;
+	let filetype = getFiletype(filename); 
+	let file_url = msg.attachments.array()[0].url;
 
 	if (
 		filetype != "png" &&
 		filetype != "jpg" &&
 		filetype != "jpeg"
-   	   ) {
+	) {
 		msg.channel.send("**PNG and JPG** only!");
 		return;
-	}	
+	}
 
 	msg.channel.startTyping();
 
-	svg = fs.readFileSync(global.__dirname+"/svg/dont.svg", "utf8")
+	svg = fs.readFileSync(global.__dirname+"/svg/isthisa.svg", "utf8")
 		.replace(/\[image\]/g, datauri.format(".png", requests("GET", file_url).getBody()).content)
+		.replace(/\[quote\]/g, quote)
 
 	svgImg(svg, function(err, buffer) {
 		if (err) {
@@ -62,6 +52,6 @@ module.exports = function(msg) {
 
 		msg.channel.send(new Discord.Attachment(buffer));
 		msg.channel.stopTyping();
-		global.db.exec("UPDATE stats SET value = value + 1 WHERE key = 'dont';");
+		global.db.exec("UPDATE stats SET value = value + 1 WHERE key = 'isthisa';");
 	});
 }

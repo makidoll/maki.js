@@ -7,12 +7,12 @@ function getStat(key) {
 
 module.exports = function(msg, bot) {
 	let p = global.prefix;
-	let fun = 
-		"**"+p+"cas:** "+getStat("cas")+"\n"+
-		"**"+p+"hoh:** "+getStat("hoh")+"\n"+
-		"**"+p+"hah:** "+getStat("hah")+"\n"+
-		"**"+p+"dont:** "+getStat("dont")+"\n"+
-		"**"+p+"text:** "+getStat("text");
+	let fun = "";
+
+	for (var i=0; i<global.commands["Fun"][1].length; i++) {
+		let cmd = global.commands["Fun"][1][i];
+		fun += "**"+p+cmd+":** "+getStat(cmd)+"\n";
+	}; fun = fun.slice(0,-1);
 
 	let cuties = global.db.prepare("SELECT COUNT(id) AS count FROM users;").get().count;
 

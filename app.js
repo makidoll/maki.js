@@ -36,7 +36,7 @@ var commands = {
 		["cas", "hoh", "hah", "dont", "text", "isthisa"]
 	],
 	"Profile": [":hibiscus:",
-		["profile", "waifu", "bg"]
+		["profile", "bg", "waifu", "waifustats"]
 	],
 	"Lewd": [":sweat_drops:",
 		["e621", "rule34", "gelbooru", "konachan"]

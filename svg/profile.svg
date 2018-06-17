@@ -24,8 +24,7 @@
 
 	<!-- background -->
 	<clipPath id="background"><rect width="400" height="300" fill="green" rx="8" ry="8"/></clipPath>
-	<rect clip-path="url(#background)" width="400" height="300" fill="#fff"/> <!-- card background -->
-	<rect clip-path="url(#background)" width="130" height="300" fill="#fff"/> <!-- side background -->
+	<rect clip-path="url(#background)" width="400" height="180" y="120" fill="#fff"/> <!-- card background -->
 	<rect clip-path="url(#background)" x="130" width="80" height="300" fill="url(#background-sidebar)"/> <!-- side background gradient -->
 
 	<!-- custom background -->

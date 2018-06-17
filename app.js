@@ -33,10 +33,10 @@ var commands = {
 		["help", "stats"]
 	],
 	"Fun": [":tada:",
-		["cas", "hoh", "hah", "dont", "text", "isthisa"]
+		["cas", "hoh", "hah", "dont", "text", "isthisa", "sarcastic"]
 	],
 	"Profile": [":hibiscus:",
-		["profile", "bg", "waifu", "waifustats"]
+		["profile", "bg", "waifu", "dewaifu", "waifustats"]
 	],
 	"Lewd": [":sweat_drops:",
 		["e621", "rule34", "gelbooru", "konachan"]

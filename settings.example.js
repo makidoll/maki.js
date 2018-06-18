@@ -8,8 +8,9 @@ module.exports = {
 	},
 	
 	web: {
-		active: true,
-		port: 6969
+		active: false,
+		port: 6969,
+		token: ""
 	},
 
 	// DON'T TURN IT ON!

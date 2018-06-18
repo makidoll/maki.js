@@ -17,5 +17,5 @@ module.exports = function(msg) {
 
 	waifu.splice(waifu.indexOf(waifu_id),1);
 	global.db.prepare("UPDATE users SET waifu = ? WHERE id = ?;").run(JSON.stringify(waifu), msg.author.id);
-	msg.channel.send("\"I really hate you **"+msg.mentions.users.array()[0].username+"**!!\" - **"+msg.author.username+"**");
+	msg.channel.send("\"I really hate you **"+msg.mentions.users.array()[0].username+"!!**\" - **"+msg.author.username+"**");
 }

@@ -46,7 +46,7 @@ module.exports = function(msg) {
 	// show waifu image
 	msg.channel.startTyping();
 	svg(fs.readFileSync(global.__dirname+"/svg/waifu.svg", "utf8")
-		.replace(/\[avatar_0\]/g, datauri.format(".png", requests("GET", msg.author.avatarURL).getBody()).content)
+		.replace(/\[avatar_0\]/g, datauri.format(".png", requests("GET", msg.author.displayAvatarURL).getBody()).content)
 		.replace(/\[avatar_1\]/g, datauri.format(".png", waifu_avatar).content),
 	function(err, buffer) {
 		msg.channel.send("**"+msg.author.username+"** is now in love with **"+msg.mentions.users.array()[0].username+"**!", {

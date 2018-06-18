@@ -6,7 +6,10 @@ module.exports = function(msg) {
 	let waifus_obj = {};
 	global.db.prepare("SELECT waifu, id FROM users WHERE waifu IS NOT NULL;").all().forEach((user, i) => {
 
+		if (!msg.guild.members.exists("id", user.id)) return; // user not in server
 		JSON.parse(user.waifu).forEach((waifu, i) => {
+			if (!msg.guild.members.exists("id", waifu)) return; // waifu not in server
+
 			waifus_obj[waifu] = (waifus_obj[waifu])? waifus_obj[waifu]+1: 1;
 		});
 
@@ -34,7 +37,7 @@ module.exports = function(msg) {
 		let x = i*50;
 
 		svg_data += 
-			'<clipPath id="waifu-'+i+'">    <rect width="30" height="'+(height+25)+'" x="'+(x+10)+'" y="'+(250-height)+'" rx="8" ry="8"/></clipPath>'+
+			'<clipPath id="waifu-'+i+'">    <rect width="30" height="'+(height+25)+'" x="'+(x+10)+'" y="'+(250-height)+'" rx="15" ry="15"/></clipPath>'+
 			'<rect  clip-path="url(#waifu-'+i+')" width="30" height="'+(height+25)+'" x="'+(x+10)+'" y="'+(250-height)+'" fill="#36393e"/>'+
 			'<image clip-path="url(#waifu-'+i+')" width="30" height="'+(height+25)+'" x="'+(x+10)+'" y="'+(250-height)+'" preserveAspectRatio="xMidYMin slice" href="'+avatar+'"/>'+
 			'<rect  clip-path="url(#waifu-'+i+')" width="30" height="'+(height+25)+'" x="'+(x+10)+'" y="'+(250-height)+'" fill="rgba(0,0,0,0.6)"/>'+
@@ -58,7 +61,7 @@ module.exports = function(msg) {
 			return;
 		}
 
-		msg.channel.send("", { files: [{ attachment: new Buffer(buffer) }] });
+		msg.channel.send("Top 8 waifu's of **"+msg.guild.name+"**:", { files: [{ attachment: new Buffer(buffer) }] });
 		msg.channel.stopTyping();
 	});
 }

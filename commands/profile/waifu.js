@@ -5,6 +5,11 @@ var Datauri = require("datauri");
 var datauri = new Datauri();
 
 module.exports = function(msg) {
+	// cache their avi
+	let user_avatar = requests("GET", msg.author.displayAvatarURL).getBody();
+	fs.writeFileSync(global.__dirname+"/cache/avatars/"+msg.author.id+".png", user_avatar);
+
+	// get users waifus
 	let waifu = global.db.prepare("SELECT waifu FROM users WHERE id = '"+msg.author.id+"';").get().waifu;
 	waifu = (!waifu)? []: JSON.parse(waifu);
 
@@ -46,7 +51,7 @@ module.exports = function(msg) {
 	// show waifu image
 	msg.channel.startTyping();
 	svg(fs.readFileSync(global.__dirname+"/svg/waifu.svg", "utf8")
-		.replace(/\[avatar_0\]/g, datauri.format(".png", requests("GET", msg.author.displayAvatarURL).getBody()).content)
+		.replace(/\[avatar_0\]/g, datauri.format(".png", user_avatar).content)
 		.replace(/\[avatar_1\]/g, datauri.format(".png", waifu_avatar).content),
 	function(err, buffer) {
 		msg.channel.send("**"+msg.author.username+"** is now in love with **"+msg.mentions.users.array()[0].username+"**!", {

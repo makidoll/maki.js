@@ -4,7 +4,7 @@ module.exports = function(msg) {
 	let splitTags = msg.content.split(" ");
 
 	if (!msg.channel.nsfw && !(msg.channel.type === "dm")) { msg.channel.send("You can only use this command in **NSFW** channels."); msg.channel.stopTyping(); return; }
-	if (splitTags[1] == undefined) { msg.channel.send("Incorrect syntax! Try **"+global.prefix+"lewde621 (tag)**"); msg.channel.stopTyping(); return; }
+	if (splitTags[1] == undefined) { msg.channel.send("Incorrect syntax! Try **"+global.prefix+"e621 (tag)**"); msg.channel.stopTyping(); return; }
 
 	splitTags.shift();
 	tags = splitTags.join(",");

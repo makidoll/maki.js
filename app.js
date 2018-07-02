@@ -33,7 +33,7 @@ var commands = {
 		["help", "stats"]
 	],
 	"Fun": [":tada:",
-		["cas", "hoh", "hah", "dont", "text", "isthisa", "sarcastic", "comfy"]
+		["cas", "hoh", "hah", "dont", "text", "isthisa", "sarcastic", "comfy", "slapsroofof"]
 	],
 	"Profile": [":hibiscus:",
 		["profile", "bg", "waifu", "dewaifu", "waifustats"]

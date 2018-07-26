@@ -16,7 +16,7 @@ module.exports = function(msg) {
 	if (msg.mentions.users.array()[0] == null) {
 		msg.channel.send(
 			"You have **"+waifu.length+" waifu"+((waifu.length==1)?"":"s")+"**.\n"+
-			"To add a waifu, try **"+global.prefix+"waifu (user)**"
+			"To add a waifu, try **"+global.prefix+"waifu (@mention)**"
 		);
 		return;
 	}

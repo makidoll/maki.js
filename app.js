@@ -35,6 +35,9 @@ var commands = {
 	"Fun": [":tada:",
 		["cas", "hoh", "hah", "dont", "text", "isthisa", "sarcastic", "comfy", "slapsroofof"]
 	],
+	"Jail": [":chocolate_bar:",
+		["jail", "detain", "jailtype"]
+	],
 	"Profile": [":hibiscus:",
 		["profile", "bg", "waifu", "dewaifu", "waifustats"]
 	],

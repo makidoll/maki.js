@@ -16,6 +16,8 @@ module.exports = {
 			"username TEXT,"+
 			"desc     TEXT DEFAULT '"+global.prefix+"desc',"+
 			"bg       TEXT,"+
+			"waifu    TEXT,"+
+			"jail     TEXT,"+
 			"level    INTEGER DEFAULT 1,"+
 			"xp       INTEGER DEFAULT 0,"+
 			"coins    INTEGER DEFAULT 100,"+

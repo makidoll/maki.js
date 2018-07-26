@@ -15,7 +15,7 @@ module.exports = function(msg) {
 	jail = (jail)? JSON.parse(jail.jail): {};
 
 	// check if already jailed
-	if (!jail.people) jail.people = [];
+	if (!jail.people) jail.people = {};
 	for (var i = 0; i < jail.people.length; i++) {
 		if (jail.people[i].id == user.id) {
 			jail.people[i].username = user.username;
@@ -53,6 +53,9 @@ module.exports = function(msg) {
 		reason: reason,
 	});
 
+	let type = "";
+	if (jail.type) type = " "+jail.type.substring(0,1).toUpperCase()+jail.type.slice(1);
+
 	global.db.prepare("UPDATE users SET jail = ? WHERE id = ?;").run(JSON.stringify(jail), msg.author.id);
-	msg.channel.send("**"+user.username+"** has been admitted to **"+addS(msg.author.username)+" Jail** for **"+reason+"**");
+	msg.channel.send("**"+user.username+"** has been admitted to **"+addS(msg.author.username)+type+" Jail** for **"+reason+"**");
 }

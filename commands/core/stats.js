@@ -6,15 +6,17 @@ function getStat(key) {
 }
 
 module.exports = function(msg, bot) {
-	let p = global.prefix;
 	let fun = "";
 
 	for (var i=0; i<global.commands["Fun"][1].length; i++) {
 		let cmd = global.commands["Fun"][1][i];
-		fun += "**"+p+cmd+":** "+getStat(cmd)+"\n";
-	}; fun = fun.slice(0,-1);
+		fun += "**"+cmd+":** "+getStat(cmd)+", ";
+	}; fun = fun.slice(0,-2);
 
-	let cuties = global.db.prepare("SELECT COUNT(id) AS count FROM users;").get().count;
+	let db = global.db.prepare("SELECT COUNT(id) AS cuties, SUM(level) AS level, SUM(xp) AS xp FROM users;").get();
+	let cuties = db.cuties;
+	let level = db.level;
+	let xp = db.xp;
 
 	msg.channel.send({
 		"embed": {
@@ -25,7 +27,8 @@ module.exports = function(msg, bot) {
 				{ "name": "Created", "value": moment(bot.user.createdAt).format("Do MMMM YYYY"), "inline": true },
 				{ "name": "Servers", "value": bot.guilds.array().length+" servers", "inline": true },
 				{ "name": "Profiles", "value": cuties+" cuties", "inline": true },
-				{ "name": "Fun", "value": fun, "inline": true },
+				{ "name": "Total Level/XP", "value": xp+" XP over "+level+" levels", "inline": true },
+				{ "name": "Fun Usage", "value": fun, "inline": true },
 			]
 		}
 	});

@@ -14,7 +14,7 @@
 Suspecting you're using Linux:
 
 ```sh
-git clone https://gitlab.com/makitty/maki.js
+git clone https://gitlab.com/makisune/maki.js
 cd maki.js
 npm install
 cp settings.example.js settings.js

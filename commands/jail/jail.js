@@ -11,8 +11,7 @@ module.exports = function(msg) {
 
 	let jail = global.db.prepare("SELECT jail FROM users WHERE id = '"+user.id+"';").get();
 	jail = (jail)? JSON.parse(jail.jail): {};
-
-	if (!jail) return msg.channel.send("**"+addS(user.username)+" Jail** is empty!");
+	console.log(jail);
 	if (!jail.people) return msg.channel.send("**"+addS(user.username)+" Jail** is empty!");
 
 	// print jail

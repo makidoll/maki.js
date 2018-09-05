@@ -22,7 +22,7 @@ module.exports = function(msg) {
 			"You need to attach an image and explain.\n"+
 			"```car salesman: *slaps roof of [thing]*\n"+
 			"this bad boy can fit so much [desc]```\n"+
-			"**"+global.prefix+"slapsroofof [thing], [desc] [attached image]**"
+			"**"+global.prefix+"slapsroofof [thing], [desc]        [attached image]**"
 		);
 		return;
 	}

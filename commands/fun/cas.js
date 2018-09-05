@@ -39,8 +39,9 @@ module.exports = function(msg) {
 	if (
 		filetype != "png" &&
 		filetype != "jpg" &&
-		filetype != "jpeg"
-   	   ) {
+		filetype != "jpeg" &&
+		filetype != "gif"
+	) {
 		msg.channel.send("**PNG and JPG** only!");
 		return;
 	}	

@@ -30,10 +30,13 @@ if (private) var privateApp = require(global.__dirname+"/private/app");
 
 var commands = {
 	"Core": [":star:",
-		["help", "stats"]
+		["help", "stats", "learn"]
+	],
+	"Music": [":speaker:",
+		["sound", "yt", "leave"]
 	],
 	"Fun": [":tada:",
-		["cas", "hoh", "hah", "dont", "text", "isthisa", "sarcastic", "comfy", "slapsroofof"]
+		["cas", "hoh", "hah", "dont", "text", "isthisa", "sarcastic", "comfy", "slapsroofof", "infowars"]
 	],
 	"Jail": [":chocolate_bar:",
 		["jail", "detain", "jailtype"]
@@ -68,11 +71,12 @@ for (var x=0; x<Object.keys(global.commands).length; x++) {
 
 global.log = function(msg) { console.log("["+moment().format("HH:mm:ss, DD/MM/YY")+"] "+msg); }
 global.pZ = function(str, amt) { return ("00000000"+str).slice(-amt); }
+global.addS = function(str) { return (str.slice(-1).toLowerCase()=="s")? str+"'": str+"'s"; }
+global.voice = {} // guild.id: {connection, dispatcher}
 
 // ----------
 // Discord.js
 // ----------
-
 
 bot.on("message", function(msg) {
 	if (private) privateApp.onMessage(msg, bot);
@@ -80,6 +84,22 @@ bot.on("message", function(msg) {
 	
 	// profile
 	db.update_msg(msg);
+
+	// bot mention
+	if (msg.isMentioned(bot.user)) {
+		let sentence = global.db.prepare("SELECT sentence FROM chitchat ORDER BY RANDOM() LIMIT 1;").get().sentence;
+		if (!sentence) return;
+
+		sentence = sentence.replace(/\[lower-name\]/gi, msg.author.username.toLowerCase());
+		sentence = sentence.replace(/\[upper-name\]/gi, msg.author.username.toUpperCase());
+		sentence = sentence.replace(/\[name\]/gi, msg.author.username);
+		sentence = sentence.replace(/\[server-name\]/gi, (msg.channel.guild)? msg.channel.guild.name: "DMs");
+		sentence = sentence.replace(/\[channel-name\]/gi, (msg.channel.guild)? msg.channel.name: global.addS(msg.author.username)+" DMs");
+		sentence = sentence.replace(/\[escaped-name\]/gi, escape(msg.author.username));
+		sentence = sentence.replace(/\[date\]/gi, moment().format("Do MMM 'YY"));
+		msg.channel.send(sentence);
+		//return;
+	}
 	
 	// !! aaaaah
 	if (msg.content.substring(0,2) == "!!") {

@@ -8,7 +8,7 @@
 
 - Linux (Windows isn't going to work sorry. Issues with `svg2img` and `imagemagick`)
 - https://github.com/Automattic/node-canvas#installation
-- Google Font: Roboto `pacman -Sy ttf-roboto`
+- Google Fonts: Roboto, Raleway (https://raw.githubusercontent.com/hotice/webupd8/master/install-google-fonts)
 - ImageMagick
 
 Suspecting you're using Linux:

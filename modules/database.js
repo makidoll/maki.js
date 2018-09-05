@@ -31,6 +31,13 @@ module.exports = {
 			"value INT"+
 		");");
 
+		global.db.exec("CREATE TABLE IF NOT EXISTS chitchat ("+
+			"sentence TEXT UNIQUE,"+
+			"username TEXT,"+
+			"created  DATETIME"+
+		");");
+
+
 		global.commands["Fun"][1].forEach((e, i) => {
 			addStat(e, 0);
 		});

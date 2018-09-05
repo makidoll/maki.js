@@ -13,10 +13,19 @@ module.exports = function(msg, bot) {
 		fun += "**"+cmd+":** "+getStat(cmd)+", ";
 	}; fun = fun.slice(0,-2);
 
-	let db = global.db.prepare("SELECT COUNT(id) AS cuties, SUM(level) AS level, SUM(xp) AS xp FROM users;").get();
+	let db = global.db.prepare(`SELECT
+		COUNT(id) AS cuties, 
+		SUM(level) AS level, 
+		SUM(xp) AS xp
+		FROM users;`
+	).get();
+
 	let cuties = db.cuties;
 	let level = db.level;
 	let xp = db.xp;
+
+	db = global.db.prepare("SELECT COUNT(sentence) AS sentences FROM chitchat;").get();
+	let sentences = db.sentences;
 
 	msg.channel.send({
 		"embed": {
@@ -28,6 +37,7 @@ module.exports = function(msg, bot) {
 				{ "name": "Servers", "value": bot.guilds.array().length+" servers", "inline": true },
 				{ "name": "Profiles", "value": cuties+" cuties", "inline": true },
 				{ "name": "Total Level/XP", "value": xp+" XP over "+level+" levels", "inline": true },
+				{ "name": "Chit Chat", "value": sentences+" sentences", "inline": true },
 				{ "name": "Fun Usage", "value": fun, "inline": true },
 			]
 		}

@@ -6,7 +6,7 @@
 
 **Dependencies:**
 
-- Linux (Windows isn't going to work sorry. Issues with `svg2img` and `imagemagick`)
+- https://github.com/JoshuaWise/better-sqlite3/wiki/Troubleshooting-installation
 - https://github.com/Automattic/node-canvas#installation
 - Google Fonts: Roboto, Raleway (https://raw.githubusercontent.com/hotice/webupd8/master/install-google-fonts)
 - ImageMagick

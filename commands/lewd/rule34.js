@@ -1,5 +1,5 @@
 var request = require("request");
-var xml2json = require("xml2json");
+var xml2json = require("xml2json-light");
 
 module.exports = function(msg) {
 	if (!msg.channel.nsfw && !(msg.channel.type === "dm")) { msg.channel.send("You can only use this command in **NSFW** channels."); msg.channel.stopTyping(); return; }
@@ -11,8 +11,8 @@ module.exports = function(msg) {
 	request("http://rule34.xxx/index.php?page=dapi&s=post&q=index&tags="+tag, function (err, res, body) {
 		if (err) { msg.channel.send("Oh no! Rule34 isn't working."); msg.channel.stopTyping(); return; }
 
-		var json = JSON.parse(xml2json.toJson(body));
 		try {
+			var json = JSON.parse(xml2json.toJson(body));
 			var post_length = json["posts"]["post"].length;
 			var post_num = Math.floor(Math.random()*(post_length-0)+0);
 			//msg.channel.send("**This was rated with " + json["posts"]["post"][post_num]["score"] + " points and the tags are:**\n`" + json["posts"]["post"][post_num]["tags"] + "`\nhttp:" + json["posts"]["post"][post_num]["file_url"]);

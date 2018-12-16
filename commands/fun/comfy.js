@@ -1,5 +1,5 @@
 var fs = require("fs");
-var svgImg = require("svg2img");
+var svg = require(global.__dirname+"/modules/svg");
 var requests = require("sync-request");
 var Discord = require("discord.js");
 var Datauri = require("datauri");
@@ -27,21 +27,23 @@ module.exports = function(msg) {
 			return;
 		}
 
-		svg = fs.readFileSync(global.__dirname+"/svg/comfy.svg", "utf8")
+		html = fs.readFileSync(global.__dirname+"/svg/comfy.svg", "utf8")
 			.replace(/\[avatar\]/g, datauri.format(".png", avatar).content)
 			.replace(/\[r\]/g, rgb[0]/255)
 			.replace(/\[g\]/g, rgb[1]/255)
 			.replace(/\[b\]/g, rgb[2]/255)
 
-		svgImg(svg, function(err, buffer) {
-			if (err) {
-				console.log(err);
-				msg.channel.send("An error has occurred!");
-				msg.channel.stopTyping();
-				return;
-			}
+		svg.render(html, 125, 128).then(buffer=>{
+			// if (err) {
+			// 	console.log(err);
+			// 	msg.channel.send("An error has occurred!");
+			// 	msg.channel.stopTyping();
+			// 	return;
+			// }
 
-			msg.channel.send(new Discord.Attachment(buffer));
+			msg.channel.send("", {
+				files: [{ attachment: buffer }]
+			});
 			msg.channel.stopTyping();
 			global.db.exec("UPDATE stats SET value = value + 1 WHERE key = 'comfy';");
 		});

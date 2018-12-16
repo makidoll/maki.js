@@ -9,8 +9,13 @@ module.exports = function(msg) {
 	console.log()
 	for (var i=0; i<catagories.length; i++) {
 		let catagory = global.commands[catagories[i]];
-		out += catagory[0]+" **"+catagories[i]+":** "+
-			"`"+(catagory[1]+"").replace(/,/g, ", ")+"`\n";
+		out += catagory[0]+" **"+catagories[i]+":** ";
+
+		if (catagory[1].length>0) {
+			out += "`"+(catagory[1]+"").replace(/,/g, ", ")+"`";
+		}
+
+		out += "\n";
 	}
 
 	msg.channel.send("", { 

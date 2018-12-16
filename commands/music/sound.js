@@ -39,7 +39,7 @@ module.exports = function(msg, bot) {
 
 	voiceChannel.join().then(connection=>{
 		let dispatcher = connection.playFile(global.__dirname+"/sounds/"+soundFilename, {
-			bitrate: 48000, volume: 1
+			volume: 0.6
 		});
 		
 		dispatcher.on("end", ()=>{ setTimeout(()=>{

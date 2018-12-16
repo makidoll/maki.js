@@ -18,25 +18,21 @@ var moment = require("moment");
 // Variables
 // ---------
 
-global = require(__dirname+"/settings");
+global = Object.assign(global, require(__dirname+"/settings"));
 global.__dirname = __dirname;
 var db = require(__dirname+"/modules/database");
-var private = fs.existsSync(global.__dirname+"/private");
-if (private) var privateApp = require(global.__dirname+"/private/app");
-
-// "waifu",
-// "desc",
-// "coinflip"
+var privateExists = fs.existsSync(global.__dirname+"/private");
+if (privateExists) var privateApp = require(global.__dirname+"/private/app");
 
 var commands = {
 	"Core": [":star:",
-		["help", "stats", "learn"]
+		["help", "learn", "botstats", "userstats"]
 	],
 	"Music": [":speaker:",
-		["sound", "yt", "leave"]
+		["sound", "play", "leave"]
 	],
 	"Fun": [":tada:",
-		["cas", "hoh", "hah", "dont", "text", "isthisa", "sarcastic", "comfy", "slapsroofof", "infowars"]
+		["cas", "dont", "text", "isthisa", "sarcastic", "comfy", "slapsroofof", "infowars"]
 	],
 	"Jail": [":chocolate_bar:",
 		["jail", "detain", "jailtype"]
@@ -48,7 +44,7 @@ var commands = {
 		["e621", "rule34", "gelbooru", "konachan"]
 	],
 	"Info": [":question:",
-		["osu", "avatar", "server"]
+		["osu", "avatar", "serverstats", "servermsgs"]
 	],
 }
 
@@ -79,7 +75,7 @@ global.voice = {} // guild.id: {connection, dispatcher}
 // ----------
 
 bot.on("message", function(msg) {
-	if (private) privateApp.onMessage(msg, bot);
+	if (privateExists) privateApp.onMessage(msg, bot);
 	if (msg.author.bot) return;  
 	
 	// profile
@@ -87,7 +83,8 @@ bot.on("message", function(msg) {
 
 	// bot mention
 	if (msg.isMentioned(bot.user)) {
-		let sentence = global.db.prepare("SELECT sentence FROM chitchat ORDER BY RANDOM() LIMIT 1;").get().sentence;
+		let chitchit = global.db.prepare("SELECT * FROM chitchat ORDER BY RANDOM() LIMIT 1;").get();
+		let sentence = chitchit.sentence;
 		if (!sentence) return;
 
 		sentence = sentence.replace(/\[lower-name\]/gi, msg.author.username.toLowerCase());
@@ -97,7 +94,19 @@ bot.on("message", function(msg) {
 		sentence = sentence.replace(/\[channel-name\]/gi, (msg.channel.guild)? msg.channel.name: global.addS(msg.author.username)+" DMs");
 		sentence = sentence.replace(/\[escaped-name\]/gi, escape(msg.author.username));
 		sentence = sentence.replace(/\[date\]/gi, moment().format("Do MMM 'YY"));
-		msg.channel.send(sentence);
+
+		let out = '"'+sentence+'"';
+		//if (sentence.match("\n")) out+= "\n";
+		out += "\n\t*- "+chitchit.username;
+
+		if (chitchit.created) {
+			out += " ("+moment(chitchit.created).format("Do MMM 'YY")+")";
+		} else {
+			out += " (some day)";
+		}
+
+		out += "*";
+		msg.channel.send(out);
 		//return;
 	}
 	
@@ -126,7 +135,7 @@ bot.on("message", function(msg) {
 
 bot.on("ready", function() {
 	global.log("Bot is online!");
-	if (private) privateApp.onReady(bot);
+	if (privateExists) privateApp.onReady(bot);
 	bot.user.setPresence({ game: { name: global.game, type: 0 } });
 
 	if (global.backup.active) require(__dirname+"/modules/backup")();

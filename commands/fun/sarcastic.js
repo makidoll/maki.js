@@ -1,5 +1,5 @@
 var fs = require("fs");
-var svgImg = require("svg2img");
+var svg = require(global.__dirname+"/modules/svg");
 var Discord = require("discord.js");
 
 function getFilenameFromUrl(url) {
@@ -27,17 +27,17 @@ module.exports = function(msg) {
 
 	msg.channel.startTyping();
 
-	svg = fs.readFileSync(global.__dirname+"/svg/sarcastic.svg", "utf8")
+	html = fs.readFileSync(global.__dirname+"/svg/sarcastic.svg", "utf8")
 		.replace(/\[upper\]/g, msg.author.username.toLowerCase()+": "+lowercase)
 		.replace(/\[lower\]/g, lol)
 
-	svgImg(svg, function(err, buffer) {
-		if (err) {
-			console.log(err);
-			msg.channel.send("An error has occurred!");
-			msg.channel.stopTyping();
-			return;
-		}
+	svg.render(html, 400, 300).then(buffer=>{
+		// if (err) {
+		// 	console.log(err);
+		// 	msg.channel.send("An error has occurred!");
+		// 	msg.channel.stopTyping();
+		// 	return;
+		// }
 
 		msg.channel.send(new Discord.Attachment(buffer));
 		msg.channel.stopTyping();

@@ -1,14 +1,15 @@
 var fs = require("fs");
-var svg = require("svg2img");
+var svg = require(global.__dirname+"/modules/svg");
+var datauri = new (require("datauri"));
 
 module.exports = function(msg) {
 	// get waifus {id: amount, ...}
 	let waifus_obj = {};
 	global.db.prepare("SELECT waifu, id FROM users WHERE waifu IS NOT NULL;").all().forEach((user, i) => {
 
-		if (!msg.guild.members.exists("id", user.id)) return; // user not in server
+		if (!msg.guild.members.has(user.id)) return; // user not in server
 		JSON.parse(user.waifu).forEach((waifu, i) => {
-			if (!msg.guild.members.exists("id", waifu)) return; // waifu not in server
+			if (!msg.guild.members.has(waifu)) return; // waifu not in server
 
 			waifus_obj[waifu] = (waifus_obj[waifu])? waifus_obj[waifu]+1: 1;
 		});
@@ -29,10 +30,10 @@ module.exports = function(msg) {
 	waifus = waifus.splice(0,8);
 
 	// generate svg!
-	let svg_data = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" style="background:#1d1f21;">';
+	let svg_data = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">';
 	let highest = waifus[0].stat;
 	waifus.forEach((waifu, i) => {
-		let avatar = global.__dirname+"/cache/avatars/"+waifu.id+".png";
+		let avatar = datauri.format(".png", fs.readFileSync(global.__dirname+"/cache/avatars/"+waifu.id+".png")).content;
 		let height = Math.round(waifu.stat/highest*220);
 		let x = i*50;
 
@@ -53,15 +54,15 @@ module.exports = function(msg) {
 
 	// make svg
 	msg.channel.startTyping();
-	svg(svg_data, function(err, buffer) {
-		if (err) {
-			msg.channel.stopTyping();
-			msg.channel.send("An error has occured!");
-			console.log(err);
-			return;
-		}
+	svg.render(svg_data, 400, 300).then(buffer=>{
+		// if (err) {
+		// 	msg.channel.stopTyping();
+		// 	msg.channel.send("An error has occured!");
+		// 	console.log(err);
+		// 	return;
+		// }
 
-		msg.channel.send("Top 8 waifu's of **"+msg.guild.name+"**:", { files: [{ attachment: new Buffer(buffer) }] });
+		msg.channel.send("Top 8 waifu's of **"+msg.guild.name+"**:", { files: [{ attachment: buffer }] });
 		msg.channel.stopTyping();
 	});
 }

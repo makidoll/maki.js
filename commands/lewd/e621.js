@@ -18,8 +18,8 @@ module.exports = function(msg) {
 	}, function (err, res, body) {
 		if (err) { msg.channel.send("Oh no! e621 isn't working."); msg.channel.stopTyping(); return; }
 
-		var json = JSON.parse(body);
 		try {
+			var json = JSON.parse(body);
 			var post_length = json.length;
 			var post_num = Math.floor(Math.random()*post_length);
 			//msg.channel.send("**This was rated with " + json["posts"]["post"][post_num]["score"] + " points and the tags are:**\n`" + json["posts"]["post"][post_num]["tags"] + "`\nhttp:" + json["posts"]["post"][post_num]["file_url"]);

@@ -1,6 +1,6 @@
 var fs = require("fs");
 var requests = require("sync-request");
-var svg = require("svg2img");
+var svg = require(global.__dirname+"/modules/svg");
 var Datauri = require("datauri");
 var datauri = new Datauri();
 
@@ -50,12 +50,12 @@ module.exports = function(msg) {
 
 	// show waifu image
 	msg.channel.startTyping();
-	svg(fs.readFileSync(global.__dirname+"/svg/waifu.svg", "utf8")
+	svg.render(fs.readFileSync(global.__dirname+"/svg/waifu.svg", "utf8")
 		.replace(/\[avatar_0\]/g, datauri.format(".png", user_avatar).content)
 		.replace(/\[avatar_1\]/g, datauri.format(".png", waifu_avatar).content),
-	function(err, buffer) {
+	352, 128).then(buffer=>{
 		msg.channel.send("**"+msg.author.username+"** is now in love with **"+msg.mentions.users.array()[0].username+"**!", {
-			files: [{ attachment: new Buffer(buffer) }]
+			files: [{ attachment: buffer }]
 		});
 		msg.channel.stopTyping();
 	});

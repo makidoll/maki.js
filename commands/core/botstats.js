@@ -5,6 +5,15 @@ function getStat(key) {
 	return global.db.prepare("SELECT value FROM stats WHERE key = '"+key+"';").get().value;
 }
 
+const beautifyInt = n=>{
+	let out = "";
+	n = (n+"").split("");
+	for (var i=n.length-1; i>=0; i--) {
+		out = (((n.length-i)%3==0&&i!=0)?",":"")+n[i]+out;
+	}
+	return out;
+}
+
 module.exports = function(msg, bot) {
 	let fun = "";
 
@@ -21,8 +30,7 @@ module.exports = function(msg, bot) {
 	).get();
 
 	let cuties = db.cuties;
-	let level = db.level;
-	let xp = db.xp;
+	let xp = parseInt(db.xp)+(parseInt(db.level)*1000);
 
 	db = global.db.prepare("SELECT COUNT(sentence) AS sentences FROM chitchat;").get();
 	let sentences = db.sentences;
@@ -30,13 +38,13 @@ module.exports = function(msg, bot) {
 	msg.channel.send({
 		"embed": {
 			"thumbnail": {
-				"url": bot.user.avatarURL
+				"url": bot.user.displayAvatarURL
 			},
 			"fields": [
 				{ "name": "Created", "value": moment(bot.user.createdAt).format("Do MMMM YYYY"), "inline": true },
 				{ "name": "Servers", "value": bot.guilds.array().length+" servers", "inline": true },
 				{ "name": "Profiles", "value": cuties+" cuties", "inline": true },
-				{ "name": "Total Level/XP", "value": xp+" XP over "+level+" levels", "inline": true },
+				{ "name": "Total XP", "value": beautifyInt(xp)+" XP", "inline": true },
 				{ "name": "Chit Chat", "value": sentences+" sentences", "inline": true },
 				{ "name": "Fun Usage", "value": fun, "inline": true },
 			]

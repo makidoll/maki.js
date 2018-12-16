@@ -32,7 +32,7 @@ module.exports = {
 		");");
 
 		global.db.exec("CREATE TABLE IF NOT EXISTS chitchat ("+
-			"sentence TEXT UNIQUE,"+
+			"sentence TEXT,"+
 			"username TEXT,"+
 			"created  DATETIME"+
 		");");
@@ -59,6 +59,8 @@ module.exports = {
 	},
 
 	update_msg: function(msg) {
+		//return;
+
 		this.update_user(msg.author);
 		
 		// ha, ha, ha
@@ -69,7 +71,7 @@ module.exports = {
 		let user = global.db.prepare("SELECT xp, level FROM users WHERE id = (?);").get(msg.author.id);
 		if (user.xp >= 999) {
 			global.db.prepare("UPDATE users SET xp = 0, level = level + 1 WHERE id = ?;").run(msg.author.id);
-			msg.channel.send("Yay, <@"+msg.author.id+"> leveled up from **"+user.level+"** to **"+(user.level+1)+"**!");
+			//msg.channel.send("Yay, <@"+msg.author.id+"> leveled up from **"+user.level+"** to **"+(user.level+1)+"**!");
 		} else {
 			global.db.prepare("UPDATE users SET xp = xp + 1 WHERE id = (?);").run(msg.author.id);
 		}

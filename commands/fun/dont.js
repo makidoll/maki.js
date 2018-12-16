@@ -1,5 +1,5 @@
 var fs = require("fs");
-var svgImg = require("svg2img");
+var svg = require(global.__dirname+"/modules/svg");
 var requests = require("sync-request");
 var Discord = require("discord.js");
 var Datauri = require("datauri");
@@ -28,7 +28,7 @@ module.exports = function(msg) {
 	}
 
 	if (!msg.attachments.array()[0] && !is_url) {
-		msg.channel.send("You need to attach an image. **"+global.prefix+"dont (url or image)**");
+		msg.channel.send("You need to attach an image. **"+global.prefix+"dont [url or image]**");
 		return;
 	} 
 
@@ -49,16 +49,16 @@ module.exports = function(msg) {
 
 	msg.channel.startTyping();
 
-	svg = fs.readFileSync(global.__dirname+"/svg/dont.svg", "utf8")
+	html = fs.readFileSync(global.__dirname+"/svg/dont.svg", "utf8")
 		.replace(/\[image\]/g, datauri.format(".png", requests("GET", file_url).getBody()).content)
 
-	svgImg(svg, function(err, buffer) {
-		if (err) {
-			console.log(err);
-			msg.channel.send("An error has occurred!");
-			msg.channel.stopTyping();
-			return;
-		}
+	svg.render(html, 640, 640).then(buffer=>{
+		// if (err) {
+		// 	console.log(err);
+		// 	msg.channel.send("An error has occurred!");
+		// 	msg.channel.stopTyping();
+		// 	return;
+		// }
 
 		msg.channel.send(new Discord.Attachment(buffer));
 		msg.channel.stopTyping();

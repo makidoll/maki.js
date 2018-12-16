@@ -1,5 +1,5 @@
 var fs = require("fs");
-var svgImg = require("svg2img");
+var svg = require(global.__dirname+"/modules/svg");
 var requests = require("sync-request");
 var Discord = require("discord.js");
 var Datauri = require("datauri");
@@ -43,7 +43,7 @@ module.exports = function(msg) {
 	let dimensions = imageSize(image);
 	let height = dimensions.height * (985/dimensions.width);
 
-	svg = fs.readFileSync(global.__dirname+"/svg/infowars.svg", "utf8")
+	html = fs.readFileSync(global.__dirname+"/svg/infowars.svg", "utf8")
 		.replace(/\[title\]/g, title.toUpperCase())
 		.replace(/\[caption\]/g, caption.toUpperCase())
 		.replace(/\[name\]/g, msg.author.username.toUpperCase())
@@ -52,13 +52,13 @@ module.exports = function(msg) {
 		.replace(/\[caption-height\]/g, height-155)
 		.replace(/\[image\]/g, datauri.format(".png", image).content)
 
-	svgImg(svg, function(err, buffer) {
-		if (err) {
-			console.log(err);
-			msg.channel.send("An error has occurred!");
-			msg.channel.stopTyping();
-			return;
-		}
+	svg.render(html, 985, 600).then(buffer=>{
+		// if (err) {
+		// 	console.log(err);
+		// 	msg.channel.send("An error has occurred!");
+		// 	msg.channel.stopTyping();
+		// 	return;
+		// }
 
 		msg.channel.send(new Discord.Attachment(buffer));
 		msg.channel.stopTyping();

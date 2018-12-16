@@ -1,5 +1,5 @@
 var request = require("request");
-var xml2json = require("xml2json");
+var xml2json = require("xml2json-light");
 
 module.exports = function(msg) {
 	if (!msg.channel.nsfw && !(msg.channel.type === "dm")) { msg.channel.send("You can only use this command in **NSFW** channels."); msg.channel.stopTyping(); return; }
@@ -11,8 +11,8 @@ module.exports = function(msg) {
 	request("https://konachan.com/post.xml?limit=100&tags="+tag, function (err, res, body) {
 		if (err) { msg.channel.send("Oh no! Konachan isn't working."); msg.channel.stopTyping(); return; }
 
-		var json = JSON.parse(xml2json.toJson(body))["posts"]["post"];
 		try {
+			var json = JSON.parse(xml2json.toJson(body))["posts"]["post"];
 			var post_length = json.length;
 			var post_num = Math.floor(Math.random()*post_length);
 			//msg.channel.send("**This was rated with " + json["posts"]["post"][post_num]["score"] + " points and the tags are:**\n`" + json["posts"]["post"][post_num]["tags"] + "`\nhttp:" + json["posts"]["post"][post_num]["file_url"]);
